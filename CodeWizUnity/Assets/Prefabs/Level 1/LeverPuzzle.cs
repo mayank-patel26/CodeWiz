@@ -31,7 +31,7 @@ public class LeverPuzzle : MonoBehaviour
 
     private void Start()
     {
-        torchCount = 0;
+        /*torchCount = 0;
         torch1Flag = true;
         torch2Flag = true;
         torch3Flag = true;
@@ -44,7 +44,7 @@ public class LeverPuzzle : MonoBehaviour
         toggleTorch3(torch3Flag);
         torch3Flag = !torch3Flag;
         toggleTorch4(torch4Flag);
-        torch4Flag = !torch4Flag;
+        torch4Flag = !torch4Flag;*/
     }
 
     private void Update()
@@ -66,7 +66,12 @@ public class LeverPuzzle : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0))
         {
-            isDone = false;
+            if(torch1.activeSelf==true)
+                torch1.SetActive(false);
+            else
+                torch1.SetActive(true);
+            
+            /*isDone = false;
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
@@ -118,8 +123,8 @@ public class LeverPuzzle : MonoBehaviour
                         torch4Flag = !torch4Flag;
                     }
 
-                }
-            }
+                }*/
+            //}
         }
     }
 
