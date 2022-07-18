@@ -24,8 +24,19 @@ public class LeverPuzzle : MonoBehaviour
     private int torchCount;
     private bool isDone;
 
+    #region SwitchAnims
+    private Animator SAnim1;
+    private Animator SAnim2;
+    private Animator SAnim3;
+    private Animator SAnim4;
+    #endregion
+
     private void Start()
     {
+        SAnim1 = Switch1.transform.GetChild(1).gameObject.GetComponent<Animator>();
+        SAnim2 = Switch2.transform.GetChild(1).gameObject.GetComponent<Animator>();
+        SAnim3 = Switch3.transform.GetChild(1).gameObject.GetComponent<Animator>();
+        SAnim4 = Switch4.transform.GetChild(1).gameObject.GetComponent<Animator>();
         torchCount = 0;
         torch1.SetActive(false);
         torch2.SetActive(false);
@@ -52,6 +63,7 @@ public class LeverPuzzle : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            
             isDone = false;
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -59,34 +71,35 @@ public class LeverPuzzle : MonoBehaviour
             {
                 if (hit.transform)
                 {
+                    
                     if (hit.transform.gameObject.name == Switch1.name)
                     {
-                        /*Debug.Log(torchCount);*/
-                        toggleTorch(torch1,Switch1);
-                        toggleTorch(torch3,Switch3);
-                        toggleTorch(torch4,Switch4);
+                        SAnim1.SetBool("LeverUp",!SAnim1.GetBool("LeverUp"));
+                        toggleTorch(torch1);
+                        toggleTorch(torch3);
+                        toggleTorch(torch4);
 
                     }
                     if (hit.transform.gameObject.name == Switch2.name)
                     {
-                        /*Debug.Log(torchCount);*/
-                        toggleTorch(torch2,Switch2);
-                        toggleTorch(torch4,Switch4);
+                        SAnim2.SetBool("LeverUp", !SAnim2.GetBool("LeverUp"));
+                        toggleTorch(torch2);
+                        toggleTorch(torch4);
 
                     }
                     if (hit.transform.gameObject.name == Switch3.name)
                     {
-                        /*Debug.Log(torchCount);*/
-                        toggleTorch(torch2,Switch2);
-                        toggleTorch(torch3,Switch3);
-                        toggleTorch(torch4,Switch4);
+                        SAnim3.SetBool("LeverUp", !SAnim3.GetBool("LeverUp"));
+                        toggleTorch(torch2);
+                        toggleTorch(torch3);
+                        toggleTorch(torch4);
 
                     }
                     if (hit.transform.gameObject.name == Switch4.name)
                     {
-                        /*Debug.Log(torchCount);*/
-                        toggleTorch(torch3,Switch3);
-                        toggleTorch(torch4,Switch4);
+                        SAnim4.SetBool("LeverUp", !SAnim4.GetBool("LeverUp"));
+                        toggleTorch(torch3);
+                        toggleTorch(torch4);
 
                     }
 
@@ -96,18 +109,16 @@ public class LeverPuzzle : MonoBehaviour
         }
        
     }
-    private void toggleTorch(GameObject torch,GameObject Switch)
+    private void toggleTorch(GameObject torch)
     {
         if (torch.activeSelf == true)
         {
             torch.SetActive(false);
-            Switch.GetComponent<Animator>().SetBool("LeverUp", false);
             torchCount--;
         }
         else
         {
             torch.SetActive(true);
-            Switch.GetComponent<Animator>().SetBool("LeverUp", true);
             torchCount++;
         }
     }
