@@ -22,38 +22,25 @@ public class LeverPuzzle : MonoBehaviour
     private GameObject Switch4;
 
     private int torchCount;
-    private bool torch1Flag;
-    private bool torch2Flag;
-    private bool torch3Flag;
-    private bool torch4Flag;
-    private int t1, t2, t3, t4;
     private bool isDone;
 
     private void Start()
     {
-        /*torchCount = 0;
-        torch1Flag = true;
-        torch2Flag = true;
-        torch3Flag = true;
-        torch4Flag = true;
+        torchCount = 0;
+        torch1.SetActive(false);
+        torch2.SetActive(false);
+        torch3.SetActive(false);
+        torch4.SetActive(false);
         isDone = true;
-        toggleTorch1(torch1Flag);
-        torch1Flag = !torch1Flag;
-        toggleTorch2(torch2Flag);
-        torch2Flag = !torch2Flag;
-        toggleTorch3(torch3Flag);
-        torch3Flag = !torch3Flag;
-        toggleTorch4(torch4Flag);
-        torch4Flag = !torch4Flag;*/
     }
 
     private void Update()
     {
         OnMouseDown();
-        torchCount = t1 + t2 + t3 + t4;
+        
         if (!isDone)
         {
-            if(torchCount == 4)
+            if (torchCount == 4)
             {
                 Debug.Log("SUCCESS");
                 isDone = true;
@@ -63,157 +50,64 @@ public class LeverPuzzle : MonoBehaviour
 
     private void OnMouseDown()
     {
-        
+
         if (Input.GetMouseButtonDown(0))
         {
-            if(torch1.activeSelf==true)
-                torch1.SetActive(false);
-            else
-                torch1.SetActive(true);
-            
-            /*isDone = false;
+            isDone = false;
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
                 if (hit.transform)
                 {
-                    if(hit.transform.gameObject.name == Switch1.name)
+                    if (hit.transform.gameObject.name == Switch1.name)
                     {
-                        Debug.Log(hit.transform.gameObject.name);
-                        toggleTorch1(torch1Flag);
-                        torch1Flag = !torch1Flag;
-
-                        toggleTorch3(torch3Flag);
-                        torch3Flag = !torch3Flag;
-
-                        toggleTorch4(torch4Flag);
-                        torch4Flag = !torch4Flag;
+                        /*Debug.Log(torchCount);*/
+                        toggleTorch(torch1);
+                        toggleTorch(torch3);
+                        toggleTorch(torch4);
 
                     }
                     if (hit.transform.gameObject.name == Switch2.name)
                     {
-                        Debug.Log(hit.transform.gameObject.name);
-                        toggleTorch2(torch2Flag);
-                        torch2Flag = !torch2Flag;
+                        /*Debug.Log(torchCount);*/
+                        toggleTorch(torch2);
+                        toggleTorch(torch4);
 
-                        toggleTorch4(torch4Flag);
-                        torch4Flag = !torch4Flag;
                     }
                     if (hit.transform.gameObject.name == Switch3.name)
                     {
-                        Debug.Log(hit.transform.gameObject.name);
-                        toggleTorch2(torch2Flag);
-                        torch2Flag = !torch2Flag;
+                        /*Debug.Log(torchCount);*/
+                        toggleTorch(torch2);
+                        toggleTorch(torch3);
+                        toggleTorch(torch4);
 
-                        toggleTorch3(torch3Flag);
-                        torch3Flag = !torch3Flag;
-
-                        toggleTorch4(torch4Flag);
-                        torch4Flag = !torch4Flag;
                     }
                     if (hit.transform.gameObject.name == Switch4.name)
                     {
-                        Debug.Log(hit.transform.gameObject.name);
-                       
-                        toggleTorch3(torch3Flag);
-                        torch3Flag = !torch3Flag;
+                        /*Debug.Log(torchCount);*/
+                        toggleTorch(torch3);
+                        toggleTorch(torch4);
 
-                        toggleTorch4(torch4Flag);
-                        torch4Flag = !torch4Flag;
                     }
 
-                }*/
-            //}
-        }
-    }
-
-    private void toggleTorch1(bool torchflag)
-    {
-            if (torchflag)
-            {
-                for (int i = 0; i < torch1.transform.childCount; i++)
-                {
-                    torch1.transform.GetChild(i).gameObject.SetActive(false);
-                t1 = 0;
                 }
-            }
-            if(!torchflag)
-            {
-                for (int i = 0; i < torch1.transform.childCount; i++)
-                {
-                    torch1.transform.GetChild(i).gameObject.SetActive(true);
-                t1 = 1;
-                }
-            }
-        
 
+            }
+        }
+       
     }
-
-    private void toggleTorch2(bool torchflag)
+    private void toggleTorch(GameObject torch)
     {
-        if (torchflag)
+        if (torch.activeSelf == true)
         {
-            for (int i = 0; i < torch2.transform.childCount; i++)
-            {
-                torch2.transform.GetChild(i).gameObject.SetActive(false);
-                t2 = 0;
-            }
+            torch.SetActive(false);
+            torchCount--;
         }
-        if (!torchflag)
+        else
         {
-            for (int i = 0; i < torch2.transform.childCount; i++)
-            {
-                torch2.transform.GetChild(i).gameObject.SetActive(true);
-                t2 = 1;
-            }
+            torch.SetActive(true);
+            torchCount++;
         }
-        
-
     }
-
-    private void toggleTorch3(bool torchflag)
-    {
-        if (torchflag)
-        {
-            for (int i = 0; i < torch3.transform.childCount; i++)
-            {
-                torch3.transform.GetChild(i).gameObject.SetActive(false);
-                t3 = 0;
-            }
-        }
-        if (!torchflag)
-        {
-            for (int i = 0; i < torch3.transform.childCount; i++)
-            {
-                torch3.transform.GetChild(i).gameObject.SetActive(true);
-                t3 = 1;
-            }
-        }
-        
-
-    }
-
-    private void toggleTorch4(bool torchflag)
-    {
-        if (torchflag)
-        {
-            for (int i = 0; i < torch4.transform.childCount; i++)
-            {
-                torch4.transform.GetChild(i).gameObject.SetActive(false);
-                t4 = 0;
-            }
-        }
-        if (!torchflag)
-        {
-            for (int i = 0; i < torch4.transform.childCount; i++)
-            {
-                torch4.transform.GetChild(i).gameObject.SetActive(true);
-                t4 = 1;
-            }
-        }
-        
-
-    }
-
 }
