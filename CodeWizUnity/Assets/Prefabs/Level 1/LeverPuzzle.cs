@@ -50,7 +50,6 @@ public class LeverPuzzle : MonoBehaviour
 
     private void OnMouseDown()
     {
-
         if (Input.GetMouseButtonDown(0))
         {
             isDone = false;
@@ -63,31 +62,31 @@ public class LeverPuzzle : MonoBehaviour
                     if (hit.transform.gameObject.name == Switch1.name)
                     {
                         /*Debug.Log(torchCount);*/
-                        toggleTorch(torch1);
-                        toggleTorch(torch3);
-                        toggleTorch(torch4);
+                        toggleTorch(torch1,Switch1);
+                        toggleTorch(torch3,Switch3);
+                        toggleTorch(torch4,Switch4);
 
                     }
                     if (hit.transform.gameObject.name == Switch2.name)
                     {
                         /*Debug.Log(torchCount);*/
-                        toggleTorch(torch2);
-                        toggleTorch(torch4);
+                        toggleTorch(torch2,Switch2);
+                        toggleTorch(torch4,Switch4);
 
                     }
                     if (hit.transform.gameObject.name == Switch3.name)
                     {
                         /*Debug.Log(torchCount);*/
-                        toggleTorch(torch2);
-                        toggleTorch(torch3);
-                        toggleTorch(torch4);
+                        toggleTorch(torch2,Switch2);
+                        toggleTorch(torch3,Switch3);
+                        toggleTorch(torch4,Switch4);
 
                     }
                     if (hit.transform.gameObject.name == Switch4.name)
                     {
                         /*Debug.Log(torchCount);*/
-                        toggleTorch(torch3);
-                        toggleTorch(torch4);
+                        toggleTorch(torch3,Switch3);
+                        toggleTorch(torch4,Switch4);
 
                     }
 
@@ -97,16 +96,18 @@ public class LeverPuzzle : MonoBehaviour
         }
        
     }
-    private void toggleTorch(GameObject torch)
+    private void toggleTorch(GameObject torch,GameObject Switch)
     {
         if (torch.activeSelf == true)
         {
             torch.SetActive(false);
+            Switch.GetComponent<Animator>().SetBool("LeverUp", false);
             torchCount--;
         }
         else
         {
             torch.SetActive(true);
+            Switch.GetComponent<Animator>().SetBool("LeverUp", true);
             torchCount++;
         }
     }
