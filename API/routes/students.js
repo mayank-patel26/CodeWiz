@@ -3,9 +3,14 @@ const Student = require("../models/student");
 const router = express.Router();
 const bcryptjs = require('bcryptjs');
 const student = require("../models/student");
+const { body, validationResult } = require("express-validator");
 
 //Creating one student (WEBSITE)
-router.post("/register", async (req, res) => {
+router.post("/register", [body('email').isEmail(),body('password').isLength({min: 8})], async (req, res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+      return res.status(400).json({errors: errors.array()})
+    }
     let lvl = {
       time: [],
       score: [],
@@ -32,8 +37,7 @@ router.post("/register", async (req, res) => {
 
 //>>>CHECK CRASHING<<<
 //Login (WEBSITE AND UNITY)
-router.get("/login", async (req, res) => {
-
+router.post("/login", async (req, res) => {
   try{
     const student = await Student.findById(req.body.username).clone();
     if(student == null){
@@ -101,7 +105,7 @@ router.get("/", async (req, res) => {
 }); 
 
 //Getting one student (WEBSITE)
-router.get("/getStudent", async(req, res)=>{
+router.post("/getStudent", async(req, res)=>{
   const student = await Student.findById(req.body.username).clone()
   if(student == null){
     res.status(404).json({message: "Cannot find student"})

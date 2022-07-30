@@ -3,14 +3,14 @@ POST http://localhost:3031/students/register
 Content-Type: application/json
 
 {
-    "fullname": "z",
-    "email": "z@gmail.com",
-    "password": "z",
-    "username": "z"
+    "fullname": "test1",
+    "email": "test1gmail.com",
+    "password": "test1",
+    "username": "test1"
 }
 
 ###
-GET http://localhost:3031/students/login
+POST http://localhost:3031/students/login
 Content-Type: application/json
 
 {
@@ -25,9 +25,9 @@ Content-Type: application/json
 {
     "level":
     {
-      "time": [[1,1],[1,1],[1,1]],
-      "score": [[1,1],[1,1],[1,1]],
-      "incat": [[1,1],[1,1],[1,1]]
+      "time": [[1,1,1],[1,1],[1,1]],
+      "score": [[1,1,1],[1,1],[1,1]],
+      "incat": [[1,1,1],[1,1],[1,1]]
     }
 }
 
@@ -35,7 +35,7 @@ Content-Type: application/json
 GET http://localhost:3031/students/pandey/1
 
 ###
-GET http://localhost:3031/students/getStudent
+POST http://localhost:3031/students/getStudent
 Content-Type: application/json
 
 {
@@ -50,18 +50,18 @@ POST http://localhost:3031/teachers/register
 Content-Type: application/json
 
 {
-    "fullname": "t1",
-    "email": "t1@gmail.com",
-    "password": "t1",
-    "username": "t1",
+    "fullname": "bhavesh",
+    "email": "bhavesh@gmail.com",
+    "password": "bhaveshmali",
+    "username": "bhaveshmali",
     "subject": "cs"
 }
 
 ###
-GET http://localhost:3031/teachers/login
+POST http://localhost:3031/teachers/login
 Content-Type: application/json
 
 {
-    "password": "t1",
-    "username": "t1"
+    "password": "bhaveshmali",
+    "username": "bhaveshmali"
 }
