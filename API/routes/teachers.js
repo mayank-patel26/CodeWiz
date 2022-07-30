@@ -13,45 +13,65 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const teacher = new Teacher({
-      _id: req.body.username,
-      password: (await bcryptjs.hash(req.body.password, 10)).toString(),
-      email: req.body.email,
-      fullname: req.body.fullname,
-      subject: req.body.subject,
-    });
-
     try {
-      const newTeacher = await teacher.save();
-      res.status(201).json(newTeacher);
+      let teacher = await Teacher.findById(req.body.username);
+      if (teacher) {
+        res.status(400).json({ error: "Teacher already exists" });
+      } else {
+        const teacherNew = new Teacher({
+          _id: req.body.username,
+          password: (await bcryptjs.hash(req.body.password, 10)).toString(),
+          email: req.body.email,
+          fullname: req.body.fullname,
+          subject: req.body.subject,
+        });
+
+        try {
+          const newTeacher = await teacherNew.save();
+          res.status(201).send(newTeacher);
+        } catch (err) {
+          res.status(400).json({ message: err.message });
+        }
+      }
     } catch (err) {
       res.status(400).json({ message: err.message });
     }
   }
 );
 
-router.post("/login", async (req, res) => {
+router.post("/login", checkTeacher, async (req, res) => {
   try {
-    var teacher = await Teacher.findById(req.body.username).clone();
-    if (teacher == null) {
-      return res.status(404).json({ message: "Cannot find teacher" });
-    }
-    bcryptjs.compare(req.body.password, teacher.password, (err, valid) => {
-      if (!valid) {
-        res.status(401).json({ message: "Incorrect password" });
+    bcryptjs.compare(
+      req.body.password,
+      teacherCheck.password,
+      function (err, response) {
+        if (err) {
+          res.status(400).json({ message: err.message });
+        }
+        if (response) {
+          res.send(teacherCheck);
+        } else {
+          res.status(400).json({ message: "incorrect password" });
+        }
       }
-      res.status(200).json({ username: teacher._id });
-      //   res.status(200).json({username: teacher.username})
-      if (err) {
-        res.status(501).json({ message: err.message });
-      }
-    });
+    );
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    res.status(400).json({ message: err.message });
   }
 });
 
-//middleware for login
-async function getTeacher(req, res, next) {}
+async function checkTeacher(req, res, next) {
+  try {
+    teacherCheck = await Teacher.findById(req.body.username);
+    if (!teacherCheck) {
+      res.status(400).json({ error: "Teacher does not exist" });
+    } else {
+      res.teacherCheck = teacherCheck;
+      next();
+    }
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+}
 
 module.exports = router;
