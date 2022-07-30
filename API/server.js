@@ -8,7 +8,9 @@ const mongoose = require("mongoose");
 const port = 3031;
 const config = require("./config");
 
-const usersRouter = require("./routes/users");
+const studentsRouter = require("./routes/students");
+const teachersRouter = require("./routes/teachers");
+// const detailsRouter = require("./routes/details");
 
 app.use(logger("dev"));
 
@@ -29,7 +31,13 @@ mongoose.connect(dbUrl, options, (err) => {
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use("/users", usersRouter);
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+
+app.use("/students", studentsRouter);
+app.use("/teachers", teachersRouter);
+// app.use("/details", detailsRouter);
 
 app.listen(port, function () {
   console.log("Runnning on " + port);
