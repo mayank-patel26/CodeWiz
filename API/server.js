@@ -5,12 +5,11 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 
-const port = 3031;
+const port = process.env.PORT || 3031;
 const config = require("./config");
 
 const studentsRouter = require("./routes/students");
 const teachersRouter = require("./routes/teachers");
-// const detailsRouter = require("./routes/details");
 
 app.use(logger("dev"));
 
@@ -37,7 +36,6 @@ app.use(express.json());
 
 app.use("/students", studentsRouter);
 app.use("/teachers", teachersRouter);
-// app.use("/details", detailsRouter);
 
 app.listen(port, function () {
   console.log("Runnning on " + port);

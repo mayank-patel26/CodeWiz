@@ -4,11 +4,14 @@ const router = express.Router();
 const bcryptjs = require("bcryptjs");
 const student = require("../models/student");
 const { body, validationResult } = require("express-validator");
+const config = require("../config");
+var jwt = require('jsonwebtoken');
+const jsecret = config.jwt_secret;
 
 //Creating one student (WEBSITE)
 router.post(
   "/register",
-  [body("email").isEmail(), body("password").isLength({ min: 8 })],
+  [body("email").isEmail(), body("password").isLength({ min: 6 })],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -21,8 +24,8 @@ router.post(
       }
       let lvl = {
         time: [],
-        score: [],
-        incat: [],
+        score: null,
+        incat: []
       };
       const studentNew = new Student({
         _id: req.body.username,
@@ -37,6 +40,16 @@ router.post(
 
       try {
         const newStudent = await studentNew.save();
+        //jwt
+        const data = {
+          user: {
+            _id: studentNew._id
+          }
+        }
+        // const authToken = jwt.sign(data, jsecret)
+        // res.json({authToken: authToken})
+
+        // normal response
         res.status(201).json(newStudent);
       } catch (err) {
         res.status(400).json({ message: err.message });
@@ -47,7 +60,6 @@ router.post(
   }
 );
 
-//>>>CHECK CRASHING<<<
 //Login (WEBSITE AND UNITY)
 router.post("/login", async (req, res) => {
   try {
@@ -93,13 +105,19 @@ router.post("/:username/:lvl", async (req, res) => {
       return res.status(404).json({ message: "Cannot find student" });
     } else {
       student1.level[req.params.lvl - 1] = req.body.level;
+      //if only new badge is sent
+      // for(let i=0;i<req.body.badges.length;i++){
+      //   student1.badges.push(req.body.badges[i])
+      // }
+      student1.badges = req.body.badges
       const id = req.params.username;
-      const updatedData = student1.level;
+      const updatedLevel = student1.level;
       const option = { new: true };
+      const updatedBadges = student1.badges
 
       const result = await Student.updateOne(
         { _id: id },
-        { $set: { level: updatedData } },
+        { $set: { level: updatedLevel, badges: updatedBadges} },
         option
       );
       res.send(student1);

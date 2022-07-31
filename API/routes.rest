@@ -3,10 +3,10 @@ POST http://localhost:3031/students/register
 Content-Type: application/json
 
 {
-    "fullname": "prerana",
-    "email": "prerana@gmail.com",
-    "password": "prerana123",
-    "username": "prerana123"
+    "fullname": "testStudent1",
+    "email": "testStudent1@gmail.com",
+    "password": "testStudent1",
+    "username": "testStudent1"
 }
 
 ###
@@ -25,10 +25,11 @@ Content-Type: application/json
 {
     "level":
     {
-      "time": [[1,1,1],[1,1,1],[1,1,1]],
+      "time": [[2,2,2],[2,2,2],[2,2,2]],
       "score": [[1,1,1],[1,1,1],[1,1,1]],
       "incat": [[1,1,1],[1,1,1],[1,1,1]]
-    }
+    },
+    "badges":["bronze", "silver"]
 }
 
 ###

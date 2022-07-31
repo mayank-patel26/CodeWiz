@@ -39,6 +39,7 @@ router.post(
   }
 );
 
+//login
 router.post("/login", checkTeacher, async (req, res) => {
   try {
     bcryptjs.compare(
@@ -60,6 +61,8 @@ router.post("/login", checkTeacher, async (req, res) => {
   }
 });
 
+
+//middleware
 async function checkTeacher(req, res, next) {
   try {
     teacherCheck = await Teacher.findById(req.body.username);
