@@ -20,6 +20,7 @@ public class LeverPuzzle : MonoBehaviour
     private GameObject Switch3;
     [SerializeField]
     private GameObject Switch4;
+    [SerializeField] Animator doorAnimator;
 
     private int torchCount;
     private bool isDone;
@@ -53,7 +54,7 @@ public class LeverPuzzle : MonoBehaviour
         {
             if (torchCount == 4)
             {
-                Debug.Log("SUCCESS");
+                doorAnimator.Play("GridUp");
                 isDone = true;
             }
         }
