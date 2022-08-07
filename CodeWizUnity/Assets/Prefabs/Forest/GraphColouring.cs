@@ -15,16 +15,16 @@ public class GraphColouring : MonoBehaviour
     char selectedGemColor;
     bool canPlace;
     int correctCount = 0;
-    Vector3[] startPos = new Vector3[5];
+    //Vector3[] startPos = new Vector3[5];
 
     char[] colors = new char[6];
 
     private void Start()
     {
-        for (int i = 0; i < startPos.Length; i++)
+        /*for (int i = 0; i < startPos.Length; i++)
         {
             startPos[i] = gems[i].transform.position;
-        }
+        }*/
         for (int i = 0; i < 6; i++)
         {
             string str = edges[i].name.ToString();
@@ -38,14 +38,16 @@ public class GraphColouring : MonoBehaviour
             }
         }
     }
-
+    Vector3 startPos=Vector3.zero;
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
+                
             /*Debug.Log("Clicked");*/
             if (selectedObject == null)
             {
+
                 RaycastHit hit = CastRay();
                 if (hit.collider != null)
                 {
@@ -55,6 +57,7 @@ public class GraphColouring : MonoBehaviour
                     }
                     
                     selectedObject = hit.collider.gameObject;
+                    startPos =selectedObject.transform.position;
                     char[] tempGem = selectedObject.name.ToCharArray();
                     selectedGemColor = tempGem[0];
                     /*Debug.Log(selectedGemColor);*/
@@ -80,6 +83,9 @@ public class GraphColouring : MonoBehaviour
                                 if (colors[j] == selectedGemColor)
                                 {
                                     canPlace = false;
+                                    selectedObject.transform.position = startPos;
+                                    startPos = Vector3.zero;
+                                    Cursor.visible = true;
                                 }
                             }
                         }
@@ -105,7 +111,7 @@ public class GraphColouring : MonoBehaviour
             }
         }
 
-        if (selectedObject != null)
+        if (selectedObject != null&&startPos!=Vector3.zero)
         {
             Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(selectedObject.transform.position).z);
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
