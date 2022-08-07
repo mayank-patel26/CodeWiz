@@ -16,9 +16,6 @@ const studentSchema = new Schema({
     },
     level:{
         type: Array, required: false
-    },
-    badges:{
-        type: Array, required: false
     }
 },
 {

@@ -3,10 +3,10 @@ POST http://localhost:3031/students/register
 Content-Type: application/json
 
 {
-    "fullname": "testStudent1",
-    "email": "testStudent1@gmail.com",
-    "password": "testStudent1",
-    "username": "testStudent1"
+    "fullname": "testStudent8",
+    "email": "testStudent8@gmail.com",
+    "password": "testStudent8",
+    "username": "testStudent8"
 }
 
 ###
@@ -14,22 +14,24 @@ POST http://localhost:3031/students/login
 Content-Type: application/json
 
 {
-            "username": "messi",
-            "password": "messi"
+            "username": "testStudent4",
+            "password": "testStudent4"
 }
 
 ###
-POST http://localhost:3031/students/prerana123/1
+POST http://localhost:3031/students/testStudent1/1
 Content-Type: application/json
 
 {
     "level":
     {
       "time": [[2,2,2],[2,2,2],[2,2,2]],
-      "score": [[1,1,1],[1,1,1],[1,1,1]],
-      "incat": [[1,1,1],[1,1,1],[1,1,1]]
-    },
-    "badges":["bronze", "silver"]
+      "score": [[500,250,750]],
+      "incat": [[1,1,1],[1,1,1],[1,1,1]],
+      "badges":["bronze", "silver"],
+      "helpReq": false,
+      "mentorUser": null
+    }
 }
 
 ###

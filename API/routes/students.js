@@ -24,8 +24,11 @@ router.post(
       }
       let lvl = {
         time: [],
-        score: null,
-        incat: []
+        score: [],
+        incat: [],
+        badges: [],
+        helpReq: false,
+        mentorUser: null
       };
       const studentNew = new Student({
         _id: req.body.username,
