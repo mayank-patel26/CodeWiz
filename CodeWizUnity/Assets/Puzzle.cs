@@ -46,6 +46,8 @@ public class Puzzle : MonoBehaviour
 
     void Start()
     {
+
+        Debug.Log(Login.currentStudent.fullname);
         i = n - 1;
 
         //disabling all rings

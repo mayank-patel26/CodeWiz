@@ -107,7 +107,7 @@ router.post("/:username/:lvl", async (req, res) => {
     if (student1 == null) {
       return res.status(404).json({ message: "Cannot find student" });
     } else {
-      student1.level[req.params.lvl - 1] = req.body.level;
+      student1.level[req.params.lvl - 1] = req.body;
       //if only new badge is sent
       // for(let i=0;i<req.body.badges.length;i++){
       //   student1.badges.push(req.body.badges[i])
