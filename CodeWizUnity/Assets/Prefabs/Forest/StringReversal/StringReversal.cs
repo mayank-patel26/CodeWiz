@@ -15,12 +15,11 @@ public class StringReversal : MonoBehaviour
     private GameObject runeObj;
     [SerializeField] private GameObject correctWord;
     int baseN=5;
-    System.Random rand;
     char[] correct;
     private void Start()
     {
         runeObj = Instantiate(runes[n],parent);
-        rand= new System.Random();
+        System.Random rand= new System.Random();
         string word = RandomString(n + baseN);
         //char[] wordShuffle = Shuffle(word).ToCharArray();
         char[] wordShuffle = word.ToCharArray();
@@ -61,10 +60,10 @@ public class StringReversal : MonoBehaviour
             );
         return randomString;
     }
-    public void check()
+    public IEnumerator check()
     {
+        yield return new WaitForSeconds(0.5f);
         int c = 0;
-        Debug.Log(new string(correct));
         for (int i = 0; i < n + baseN; i++)
         {
             Transform child = runeObj.transform.GetChild(i);
@@ -72,9 +71,7 @@ public class StringReversal : MonoBehaviour
             Debug.Log(child.name);
             if(child.GetChild(0).GetComponent<TMP_Text>().text[0].Equals(correct[i]))
                 c++;
-            Debug.Log(c);
         }
-        Debug.Log(c);
         if (c == n + baseN)
             Debug.Log("Success!");
     }
