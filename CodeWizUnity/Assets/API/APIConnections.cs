@@ -7,6 +7,7 @@ public class APIConnections
 {
     public static Level studentLevel;
     public static Student currentStudent;
+    public static long loginResCode;
     public static IEnumerator FetchLevel()
     {
         string Url = "https://bugsquashers1.herokuapp.com/students/testStudent1/1";
@@ -46,7 +47,33 @@ public class APIConnections
         else
         {
             if (!request.downloadHandler.text.Equals("null"))
-            { 
+            {
+                loginResCode = request.responseCode;
+                Debug.Log(request.downloadHandler.text);
+                currentStudent = JsonUtility.FromJson<Student>(request.downloadHandler.text);
+            }
+        }
+    }
+
+    public static IEnumerator UpdateLevel(string bodyJsonString, string username, string lvl)
+    {
+        string url = $"https://bugsquashers1.herokuapp.com/students/{username}/{lvl}";
+        UnityWebRequest request = new UnityWebRequest(url, "POST");
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(bodyJsonString);
+        request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
+        request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
+        request.SetRequestHeader("Content-Type", "application/json");
+        yield return request.SendWebRequest();
+        /*        Debug.Log("Status Code: " + request.responseCode);*/
+        if (request.result == UnityWebRequest.Result.ConnectionError)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            if (!request.downloadHandler.text.Equals("null"))
+            {
+                loginResCode = request.responseCode;
                 Debug.Log(request.downloadHandler.text);
                 currentStudent = JsonUtility.FromJson<Student>(request.downloadHandler.text);
             }

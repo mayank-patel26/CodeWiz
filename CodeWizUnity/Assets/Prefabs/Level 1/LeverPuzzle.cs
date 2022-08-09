@@ -22,6 +22,9 @@ public class LeverPuzzle : MonoBehaviour
     private GameObject Switch4;
     [SerializeField] Animator doorAnimator;
 
+    [SerializeField] GameObject cutscene;
+    [SerializeField] GameObject successM;
+
     private int torchCount;
     private bool isDone;
 
@@ -55,9 +58,23 @@ public class LeverPuzzle : MonoBehaviour
             if (torchCount == 4)
             {
                 doorAnimator.Play("GridUp");
+                Invoke("startCutScene", 2.5f);
                 isDone = true;
             }
         }
+    }
+
+    void startCutScene()
+    {
+        cutscene.SetActive(true);
+        Invoke("showSuccess", 5.0f);
+     
+    }
+
+    void showSuccess()
+    {
+        cutscene.SetActive(false);
+        successM.SetActive(true);
     }
 
     private void OnMouseDown()
