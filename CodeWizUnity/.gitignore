@@ -49,7 +49,6 @@ Thumbs.db
 /UserSettings/EditorUserSettings.asset
 ProjectSettings/ProjectVersion.txt
 *.nupkg
-*.dll
 /packages.config
 /Packages/Microsoft.VisualStudio.LiveShare.1.1.57/lib/netstandard2.0/Microsoft.VisualStudio.LiveShare.xml
 /Packages/Microsoft.VisualStudio.LiveShare.1.1.57/lib/net461/Microsoft.VisualStudio.LiveShare.xml
