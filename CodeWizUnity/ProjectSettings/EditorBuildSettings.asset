@@ -6,6 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+<<<<<<< Updated upstream
     path: Assets/Scenes/Level_1.unity
     guid: b9e66b1853294284fa9b1e56587d9d31
   - enabled: 1
@@ -14,5 +15,24 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Maze.unity
     guid: 33fa0e6c3db7cc74db0d1744a74aa419
+=======
+    path: Assets/Scenes/Forest.unity
+    guid: d8dbf4c290a7fce4cb14d2e831a520d2
+  - enabled: 1
+    path: Assets/Scenes/Level_1.unity
+    guid: b9e66b1853294284fa9b1e56587d9d31
+  - enabled: 1
+    path: Assets/Scenes/Town.unity
+    guid: f4e00d62b4fef164a939d6114045b869
+  - enabled: 1
+    path: Assets/Scenes/Level_2.unity
+    guid: 307de7e498cc5c945b81570bd31690eb
+  - enabled: 1
+    path: Assets/Scenes/GraphColouring.unity
+    guid: aa757f22e25b6406994f82443990feab
+  - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: cdfcdbe488103724eadb5ea269bc00e0
+>>>>>>> Stashed changes
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}
