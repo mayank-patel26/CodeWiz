@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class APIConnections
     public static long loginResCode;
     public static IEnumerator FetchLevel()
     {
-        string Url = "https://bugsquashers1.herokuapp.com/students/testStudent1/1";
+        string Url = "https://bugsquashers1.herokuapp.com/students/alphacentauri2/1";
         using (UnityWebRequest request = UnityWebRequest.Get(Url))
         {
             yield return request.SendWebRequest();
@@ -23,8 +24,17 @@ public class APIConnections
                 if (!request.downloadHandler.text.Equals("null"))
                 {
                     /*Debug.Log(request.downloadHandler.text);*/
-                    studentLevel = JsonUtility.FromJson<Level>(request.downloadHandler.text);
-                    Debug.Log(studentLevel);
+                    //studentLevel = JsonUtility.FromJson<Level>(request.downloadHandler.text);
+                    studentLevel = JsonConvert.DeserializeObject<Level>(request.downloadHandler.text);
+                    Debug.Log(JsonConvert.SerializeObject(studentLevel));
+                    /*int[] n = new int[studentLevel.time[2].Length + 1];
+                    for (int i = 0; i < n.Length - 1; i++)
+                    {
+                        n[i] = studentLevel.time[2][i];
+                    }
+                    n[n.Length - 1] = 9;
+                    studentLevel.time[2] = n;*/
+                    
                 }
                     
             }
@@ -51,12 +61,14 @@ public class APIConnections
                 loginResCode = request.responseCode;
                 Debug.Log(request.downloadHandler.text);
                 currentStudent = JsonUtility.FromJson<Student>(request.downloadHandler.text);
+                Debug.Log(JsonConvert.SerializeObject(currentStudent));
             }
         }
     }
 
-    public static IEnumerator UpdateLevel(string bodyJsonString, string username, string lvl)
+    public static IEnumerator UpdateLevel(Level bodyObj, string username, string lvl)
     {
+        string bodyJsonString = JsonConvert.SerializeObject(bodyObj);
         string url = $"https://bugsquashers1.herokuapp.com/students/{username}/{lvl}";
         UnityWebRequest request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(bodyJsonString);

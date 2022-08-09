@@ -26,7 +26,9 @@ public class Login : MonoBehaviour
     public void onButtonClick()
     {
         /*StartCoroutine(onLoginClick());*/
-        StartCoroutine(updateStudentLevel());
+        //StartCoroutine(onLoginClick());
+        StartCoroutine(APIConnections.FetchLevel());
+
     }
 
     IEnumerator onLoginClick()
@@ -62,12 +64,13 @@ public class Login : MonoBehaviour
                 coding.SetActive(false);
                 main.SetActive(true);
             }
+
             /*Debug.Log(currentStudent.ToString());*/
             /*SceneManager.LoadScene("Maze");*/
         }
     }
 
-    IEnumerator updateStudentLevel()
+    /*IEnumerator updateStudentLevel()
     {
         string username = "alphacentauri1";
         int l = 3;
@@ -98,5 +101,5 @@ public class Login : MonoBehaviour
         Debug.Log(jsonupdatedlevel);
         yield return StartCoroutine(APIConnections.UpdateLevel(jsonupdatedlevel, username, lvl));
         currentStudent = APIConnections.currentStudent;
-    }
+    }*/
 }
