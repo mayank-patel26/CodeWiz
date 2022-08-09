@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Puzzle : MonoBehaviour
 {
+    int levelNumber = 0;
     //no of rings, from shlok's formula
-    int n = 3;
+    int n;
 
     [SerializeField]
     GameObject[] rings;
@@ -46,8 +47,8 @@ public class Puzzle : MonoBehaviour
 
     void Start()
     {
-
-        Debug.Log(Login.currentStudent.fullname);
+        n = getinitialN();
+        //Debug.Log(Login.currentStudent.fullname);
         i = n - 1;
 
         //disabling all rings
@@ -139,5 +140,16 @@ public class Puzzle : MonoBehaviour
         {
             rings[i].SetActive(false);
         }
+    }
+    int getinitialN()
+    {
+        int difficulty = 0;
+        if (APIConnections.currentStudent.level[levelNumber].time[2].Length != 0)
+            difficulty = 3;
+        else if (APIConnections.currentStudent.level[levelNumber].time[1].Length != 0)
+            difficulty = 2;
+        else
+            difficulty = 1;
+        return difficulty;
     }
 }
