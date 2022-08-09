@@ -22,11 +22,14 @@ router.post(
       if (student) {
         return res.status(400).json({ error: "Student already exists" });
       }
+      const time = new Array(3).fill(0).map(() => new Array().fill(0));
+      const incat = new Array(3).fill(0).map(() => new Array().fill(0));
+      const score = new Array(3).fill(0);
       let lvl = {
-        time: [],
-        score: [],
-        incat: [],
-        badges: [],
+        time: time,
+        score: score,
+        incat: incat,
+        badges: null,
         helpReq: false,
         mentorUser: null
       };
@@ -107,7 +110,12 @@ router.post("/:username/:lvl", async (req, res) => {
     if (student1 == null) {
       return res.status(404).json({ message: "Cannot find student" });
     } else {
-      student1.level[req.params.lvl - 1] = req.body;
+      student1.level[req.params.lvl - 1].time = req.body.time;
+      student1.level[req.params.lvl - 1].incat = req.body.incat;
+      student1.level[req.params.lvl - 1].score = req.body.score;
+      student1.level[req.params.lvl - 1].badges = req.body.badges;
+      student1.level[req.params.lvl - 1].helpReq = req.body.helpReq;
+      student1.level[req.params.lvl - 1].mentorUser = req.body.mentorUser;
       //if only new badge is sent
       // for(let i=0;i<req.body.badges.length;i++){
       //   student1.badges.push(req.body.badges[i])
@@ -116,11 +124,10 @@ router.post("/:username/:lvl", async (req, res) => {
       const id = req.params.username;
       const updatedLevel = student1.level;
       const option = { new: true };
-      const updatedBadges = student1.badges
 
       const result = await Student.updateOne(
         { _id: id },
-        { $set: { level: updatedLevel, badges: updatedBadges} },
+        { $set: { level: updatedLevel} },
         option
       );
       res.send(student1);

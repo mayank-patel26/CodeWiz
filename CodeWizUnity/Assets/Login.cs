@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 public class Login : MonoBehaviour
 {
@@ -23,7 +25,8 @@ public class Login : MonoBehaviour
 
     public void onButtonClick()
     {
-        StartCoroutine(onLoginClick());
+        /*StartCoroutine(onLoginClick());*/
+        StartCoroutine(updateStudentLevel());
     }
 
     IEnumerator onLoginClick()
@@ -62,5 +65,38 @@ public class Login : MonoBehaviour
             /*Debug.Log(currentStudent.ToString());*/
             /*SceneManager.LoadScene("Maze");*/
         }
+    }
+
+    IEnumerator updateStudentLevel()
+    {
+        string username = "alphacentauri1";
+        int l = 3;
+        string lvl = l.ToString();
+        int[][] time = new int[][]
+        {
+            new int[]{8,8,8},
+            new int[]{8,8,8},
+            new int[]{8,8,8}
+        };
+        int[][] incat = new int[][]
+        {
+            new int[]{8,8,8},
+            new int[]{8,8,8},
+            new int[]{8,8,8}
+        };
+        
+        int[] score = new int[3] { 1000, 2000, 3000 };
+
+        Level updatedLevel = new Level();
+        updatedLevel.time = time;
+        updatedLevel.score = score;
+        updatedLevel.incat = incat;
+        updatedLevel.badges = "gold";
+        updatedLevel.helpReq = true;
+        updatedLevel.mentorUser = null;
+        string jsonupdatedlevel = JsonConvert.SerializeObject(updatedLevel);
+        Debug.Log(jsonupdatedlevel);
+        yield return StartCoroutine(APIConnections.UpdateLevel(jsonupdatedlevel, username, lvl));
+        currentStudent = APIConnections.currentStudent;
     }
 }
