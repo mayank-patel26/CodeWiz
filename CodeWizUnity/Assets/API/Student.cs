@@ -9,16 +9,13 @@ public class Student
     public string fullname;
     public string password;
     public string email;
-    public List<Level> level;
-    public List<string> badges;
+    [SerializeField]
+    public Level[] level;
     public int __v;
 
     public override string ToString()
     {
-        return "ID: " + _id +
-            "\nEmail: " + email +
-            "\nFullname: " + fullname + 
-            "\nLevel: " + string.Join("\n", (List<Level>)level);
+        return _id;
     }
 }
 

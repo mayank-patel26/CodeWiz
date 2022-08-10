@@ -5,11 +5,12 @@ using UnityEngine;
 [System.Serializable]
 public class Level
 {
+    [SerializeField]
     public int[][] time;
     public int[] score;
+    [SerializeField]
     public int[][] incat;
     public string badges;
     public bool helpReq;
     public string mentorUser;
-
 }
