@@ -9,6 +9,7 @@ public class APIConnections
     public static Level studentLevel;
     public static Student currentStudent;
     public static long loginResCode;
+    public static string currentUsername;
     public static IEnumerator FetchLevel(string username, int lvl)
     {
         string level = lvl.ToString();
@@ -65,6 +66,8 @@ public class APIConnections
                 loginResCode = request.responseCode;
                 //Debug.Log(request.downloadHandler.text);
                 currentStudent = JsonConvert.DeserializeObject<Student>(request.downloadHandler.text);
+                currentUsername = currentStudent.ToString();
+                Debug.Log(currentUsername);
                 Debug.Log(JsonConvert.SerializeObject(currentStudent));
             }
         }
