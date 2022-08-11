@@ -14,7 +14,7 @@ public class Login : MonoBehaviour
     [SerializeField] GameObject login;
     [SerializeField] GameObject mainmenu;
 
-    public static Student currentStudent;
+    //public static Student currentStudent;
     public static Level currentLevel;
     public static string currentUsername;
 
@@ -56,8 +56,8 @@ public class Login : MonoBehaviour
             }
             else
             {
-                currentStudent = APIConnections.currentStudent;
-                currentUsername = currentStudent.ToString();
+                
+                currentUsername = APIConnections.currentUsername;
                 yield return StartCoroutine(APIConnections.FetchLevel(currentUsername, 1));
                 currentLevel = APIConnections.studentLevel;
                 Debug.Log(JsonConvert.SerializeObject(currentLevel));

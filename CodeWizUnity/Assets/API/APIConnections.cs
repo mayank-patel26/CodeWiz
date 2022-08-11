@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 public class APIConnections
 {
     public static Level studentLevel;
-    public static Student currentStudent;
+    //public static Student currentStudent;
     public static long loginResCode;
     public static string currentUsername;
     public static IEnumerator FetchLevel(string username, int lvl)
@@ -65,14 +65,25 @@ public class APIConnections
             {
                 loginResCode = request.responseCode;
                 //Debug.Log(request.downloadHandler.text);
-                currentStudent = JsonConvert.DeserializeObject<Student>(request.downloadHandler.text);
+                Student currentStudent = JsonConvert.DeserializeObject<Student>(request.downloadHandler.text);
                 currentUsername = currentStudent.ToString();
                 Debug.Log(currentUsername);
                 Debug.Log(JsonConvert.SerializeObject(currentStudent));
             }
         }
     }
-
+    /// <summary>
+    /// make changes to the level object, add a new level and pass it to UpdateLevel
+    /// </summary>
+    /// <param name="level"> The level object required to be updated</param>
+    /// <param name="updatedScore"> new score</param>
+    /// <param name="difficulty">current difficulty</param>
+    /// <param name="timetaken">time taken by a player in milliseconds</param>
+    public static void makeLevelChanges(Level level,int updatedScore, int difficulty, long timetaken)
+    {
+        //update the level here
+        
+    }
     public static IEnumerator UpdateLevel(string bodyJsonString, string username, int lvl)
     {
         //string bodyJsonString = JsonConvert.SerializeObject(bodyObj);
@@ -95,7 +106,7 @@ public class APIConnections
             {
                 loginResCode = request.responseCode;
                 Debug.Log(request.downloadHandler.text);
-                currentStudent = JsonUtility.FromJson<Student>(request.downloadHandler.text);
+                //currentStudent = JsonUtility.FromJson<Student>(request.downloadHandler.text);
             }
         }
     }

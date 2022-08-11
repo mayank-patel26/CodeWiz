@@ -74,10 +74,11 @@ public class DynamicDifficulty
 
     public static int getinitialN(int levelNumber)
     {
+        APIConnections.FetchLevel(APIConnections.currentUsername,levelNumber);
         int difficulty = 0;
-        if (APIConnections.currentStudent.level[levelNumber].time[2].Length != 0)
+        if (APIConnections.studentLevel.time[2].Length != 0)
             difficulty = 2;
-        else if (APIConnections.currentStudent.level[levelNumber].time[1].Length != 0)
+        else if (APIConnections.studentLevel.time[1].Length != 0)
             difficulty = 1;
         else
             difficulty = 0;

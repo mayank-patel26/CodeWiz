@@ -20,6 +20,7 @@ public class StringReversal : MonoBehaviour
     private void Start()
     {
         difficulty=DynamicDifficulty.getinitialN(levelNumber);
+        startGame();
     }
     void startGame()
     {
