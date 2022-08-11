@@ -68,7 +68,6 @@ public class LeverPuzzle : MonoBehaviour
     {
         cutscene.SetActive(true);
         Invoke("showSuccess", 5.0f);
-     
     }
 
     void showSuccess()
