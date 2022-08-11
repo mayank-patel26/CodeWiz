@@ -47,7 +47,11 @@ public class Puzzle : MonoBehaviour
 
     void Start()
     {
-        n = getinitialN();
+        startGame();
+    }
+    void startGame()
+    {
+        n = DynamicDifficulty.getinitialN(levelNumber);
         //Debug.Log(Login.currentStudent.fullname);
         i = n - 1;
 
@@ -65,7 +69,6 @@ public class Puzzle : MonoBehaviour
             rings[i].SetActive(true);
         }
     }
-
 
     void Update()
     {
@@ -141,15 +144,5 @@ public class Puzzle : MonoBehaviour
             rings[i].SetActive(false);
         }
     }
-    int getinitialN()
-    {
-        int difficulty = 0;
-        if (APIConnections.currentStudent.level[levelNumber].time[2].Length != 0)
-            difficulty = 3;
-        else if (APIConnections.currentStudent.level[levelNumber].time[1].Length != 0)
-            difficulty = 2;
-        else
-            difficulty = 1;
-        return difficulty;
-    }
+    
 }

@@ -8,27 +8,33 @@ using UnityEngine;
 
 public class StringReversal : MonoBehaviour
 {
+    int levelNumber=0;
     [SerializeField]
     GameObject[] runes;
-    int n;
+    int[] n = { 5,8,12};
+    int difficulty;
     [SerializeField] Transform parent;
     private GameObject runeObj;
     [SerializeField] private GameObject correctWord;
-    int baseN=5;
     char[] correct;
     private void Start()
     {
-        runeObj = Instantiate(runes[n],parent);
-        System.Random rand= new System.Random();
-        string word = RandomString(n + baseN);
+        difficulty=DynamicDifficulty.getinitialN(levelNumber);
+    }
+    void startGame()
+    {
+        DynamicDifficulty.startTimer();
+        runeObj = Instantiate(runes[difficulty], parent);
+        System.Random rand = new System.Random();
+        string word = RandomString(n[difficulty]);
         //char[] wordShuffle = Shuffle(word).ToCharArray();
         char[] wordShuffle = word.ToCharArray();
         Array.Reverse(wordShuffle);
         correct = word.ToCharArray();
         correctWord.GetComponent<TMP_Text>().text = word;
-        for(int i=0;i<n+baseN;i++)
+        for (int i = 0; i < n[difficulty]; i++)
         {
-            Transform child=runeObj.transform.GetChild(i);
+            Transform child = runeObj.transform.GetChild(i);
             child.GetChild(0).GetComponent<TMP_Text>().text = wordShuffle[i].ToString();
         }
     }
@@ -64,7 +70,7 @@ public class StringReversal : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         int c = 0;
-        for (int i = 0; i < n + baseN; i++)
+        for (int i = 0; i < n[difficulty]; i++)
         {
             Transform child = runeObj.transform.GetChild(i);
             //Debug.Log(child.GetChild(0).GetComponent<TMP_Text>().text[0]+"-"+correct[i]);
@@ -72,7 +78,15 @@ public class StringReversal : MonoBehaviour
             if(child.GetChild(0).GetComponent<TMP_Text>().text[0].Equals(correct[i]))
                 c++;
         }
-        if (c == n + baseN)
+        if (c == n[difficulty])
+        {
+            DynamicDifficulty.NextDifficulty((double)DynamicDifficulty.getTimeElapsed(),difficulty,0);
+            difficulty = DynamicDifficulty.currentDifficulty;
+            //update score
+            Destroy(runeObj);
+            //if difficulty = 3 show success panel and go to next level, else next difficulty 
             Debug.Log("Success!");
+        }
+            
     }
 }

@@ -4,14 +4,14 @@ public class DynamicDifficulty
 {
     public static int score;
     public static int currentDifficulty;
-    public static void difficulty(double time,int difficulty,int hints_taken)
+    public static void NextDifficulty(double time,int difficulty,int hints_taken)
     {
         /*int hints_taken = 2;*/
 
-        int easy_weight = 1;
-        int medium_weight = 2;
-        int hard_weight = 3;
-        int next_level = 4;
+        int easy_weight = 0;
+        int medium_weight = 1;
+        int hard_weight = 2;
+        int next_level = 3;
         int next_difficulty = 0;
 
         int easy = 1000;
@@ -56,6 +56,7 @@ public class DynamicDifficulty
                 difficulty = next_difficulty;
             }
         }
+        
         /*Console.WriteLine(next_difficulty);
         Console.WriteLine(score);*/
     }
@@ -70,4 +71,17 @@ public class DynamicDifficulty
         timer.Stop();
         return timer.ElapsedMilliseconds;
     }
+
+    public static int getinitialN(int levelNumber)
+    {
+        int difficulty = 0;
+        if (APIConnections.currentStudent.level[levelNumber].time[2].Length != 0)
+            difficulty = 2;
+        else if (APIConnections.currentStudent.level[levelNumber].time[1].Length != 0)
+            difficulty = 1;
+        else
+            difficulty = 0;
+        return difficulty;
+    }
+
 }
