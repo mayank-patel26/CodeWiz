@@ -12,10 +12,11 @@ public class Login : MonoBehaviour
     [SerializeField] TMP_Text NoStudentFound;
     [SerializeField] TMP_Text IncorrectPass;
     [SerializeField] GameObject login;
-    [SerializeField] GameObject coding;
-    [SerializeField] GameObject main;
+    [SerializeField] GameObject mainmenu;
 
     public static Student currentStudent;
+    public static Level currentLevel;
+    public static string currentUsername;
 
     private void Start()
     {
@@ -25,12 +26,8 @@ public class Login : MonoBehaviour
 
     public void onButtonClick()
     {
-        /*StartCoroutine(onLoginClick());*/
-        //StartCoroutine(onLoginClick());
-        StartCoroutine(APIConnections.FetchLevel());
-
+        StartCoroutine(onLoginClick());
     }
-
     IEnumerator onLoginClick()
     {
         string username = usernameInputField.text.ToString().Trim();
@@ -48,7 +45,7 @@ public class Login : MonoBehaviour
             };
             string jsonchecklogin = JsonUtility.ToJson(student);
             yield return StartCoroutine(APIConnections.CheckLogin(jsonchecklogin));
-            if(APIConnections.loginResCode == 404)
+            if (APIConnections.loginResCode == 404)
             {
                 NoStudentFound.gameObject.SetActive(true);
             }
@@ -60,9 +57,12 @@ public class Login : MonoBehaviour
             else
             {
                 currentStudent = APIConnections.currentStudent;
+                currentUsername = currentStudent.ToString();
+                yield return StartCoroutine(APIConnections.FetchLevel(currentUsername, 1));
+                currentLevel = APIConnections.studentLevel;
+                Debug.Log(JsonConvert.SerializeObject(currentLevel));
                 login.SetActive(false);
-                coding.SetActive(false);
-                main.SetActive(true);
+                mainmenu.SetActive(true);
             }
 
             /*Debug.Log(currentStudent.ToString());*/
@@ -70,6 +70,7 @@ public class Login : MonoBehaviour
         }
     }
 
+    //manual json creation >i am stupid :(<
     /*IEnumerator updateStudentLevel()
     {
         string username = "alphacentauri1";

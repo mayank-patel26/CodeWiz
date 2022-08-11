@@ -7,16 +7,19 @@ public class Navigation : MonoBehaviour {
     
     // Start is called before the first frame update
     public void Forest(){
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Forest");
     }
     public void Town(){
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("Town");
     }
     public void Mountain(){
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene("GraphColouring");
     }
     public void BackHome(){
-        SceneManager.LoadScene(5);
+        SceneManager.LoadScene("Main Menu");
+    }
+    public void Library(){
+        SceneManager.LoadScene("Level_1");
     }
 }
 

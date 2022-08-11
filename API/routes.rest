@@ -1,16 +1,16 @@
 ###
-POST http://localhost:3031/students/register
+POST https://bugsquashers1.herokuapp.com/students/register
 Content-Type: application/json
 
 {
-    "fullname": "testStudent8",
-    "email": "testStudent8@gmail.com",
-    "password": "testStudent8",
-    "username": "testStudent8"
+    "fullname": "hamilton",
+    "email": "hamilton@gmail.com",
+    "password": "hamilton",
+    "username": "hamilton"
 }
 
 ###
-POST http://localhost:3031/students/login
+POST https://bugsquashers1.herokuapp.com/students/login
 Content-Type: application/json
 
 {
@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3031/students/testStudent1/1
+POST https://bugsquashers1.herokuapp.com/students/testStudent12/1
 Content-Type: application/json
 
 {
@@ -32,10 +32,10 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3031/students/prerana123/1
+GET https://bugsquashers1.herokuapp.com/students/prerana123/1
 
 ###
-POST http://localhost:3031/students/getStudent
+POST https://bugsquashers1.herokuapp.com/students/getStudent
 Content-Type: application/json
 
 {
@@ -43,10 +43,10 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3031/students
+GET https://bugsquashers1.herokuapp.comstudents
 
 ###
-POST http://localhost:3031/teachers/register
+POST https://bugsquashers1.herokuapp.com/teachers/register
 Content-Type: application/json
 
 {
@@ -58,7 +58,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3031/teachers/login
+POST https://bugsquashers1.herokuapp.com/teachers/login
 Content-Type: application/json
 
 {

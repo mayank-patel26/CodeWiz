@@ -1,4 +1,4 @@
-using System.Collections;
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -81,7 +81,7 @@ public class Script : MonoBehaviour
                 {
                     //nth ring will rotate at speed of n x rotationSpeed 
                     rings[i].transform.Rotate(Vector3.back, (Mathf.Pow(rotationSpeed, (i + 1))) * 0.01f);
-                    /*Debug.Log(rotationSpeed * (i + 1));*/
+                    *//*Debug.Log(rotationSpeed * (i + 1));*//*
                 }
             }
             else
@@ -139,3 +139,4 @@ public class Script : MonoBehaviour
         }
     }
 }
+*/
