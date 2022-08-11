@@ -69,7 +69,7 @@ public class DynamicDifficulty
     public static long getTimeElapsed()
     {
         timer.Stop();
-        return timer.ElapsedMilliseconds;
+        return (long)(timer.ElapsedMilliseconds/1000);
     }
 
     public static int getinitialN(int levelNumber)

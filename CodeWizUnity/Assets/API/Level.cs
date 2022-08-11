@@ -6,7 +6,7 @@ using UnityEngine;
 public class Level
 {
     [SerializeField]
-    public int[][] time;
+    public long[][] time;
     public int[] score;
     [SerializeField]
     public int[][] incat;

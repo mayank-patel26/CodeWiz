@@ -4,12 +4,13 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class APIConnections
+public class APIConnections : MonoBehaviour 
 {
     public static Level studentLevel;
     //public static Student currentStudent;
     public static long loginResCode;
     public static string currentUsername;
+    public static string updatedLevelString;
     public static IEnumerator FetchLevel(string username, int lvl)
     {
         string level = lvl.ToString();
@@ -28,13 +29,7 @@ public class APIConnections
                 {
                     studentLevel = JsonConvert.DeserializeObject<Level>(request.downloadHandler.text);
                     Debug.Log(JsonConvert.SerializeObject(studentLevel));
-                    int[] n = new int[studentLevel.time[2].Length + 1];
-                    for (int i = 0; i < n.Length - 1; i++)
-                    {
-                        n[i] = studentLevel.time[2][i];
-                    }
-                    n[n.Length - 1] = 9;
-                    studentLevel.time[2] = n;
+                    
                 }
                 if (request.downloadHandler.text.Equals("null"))
                 {
@@ -79,16 +74,35 @@ public class APIConnections
     /// <param name="updatedScore"> new score</param>
     /// <param name="difficulty">current difficulty</param>
     /// <param name="timetaken">time taken by a player in milliseconds</param>
-    public static void makeLevelChanges(Level level,int updatedScore, int difficulty, long timetaken)
+    public static void makeLevelChanges(Level level,int updatedScore, int difficulty, long timetaken, int lvlNo, int incat)
     {
         //update the level here
+        long[] timeArray = new long[level.time[difficulty].Length + 1];
+        for (int i = 0; i < timeArray.Length - 1; i++)
+        {
+            timeArray[i] = level.time[difficulty][i];
+        }
+        timeArray[timeArray.Length - 1] = timetaken;
+        level.time[difficulty] = timeArray;
         
+        long[] incatArray = new long[level.time[difficulty].Length + 1];
+        for (int i = 0; i < incatArray.Length - 1; i++)
+        {
+            incatArray[i] = level.time[difficulty][i];
+        }
+        incatArray[timeArray.Length - 1] = incat;
+        level.time[difficulty] = incatArray;
+
+        level.score[difficulty] = updatedScore;
+
+        updatedLevelString = JsonConvert.SerializeObject(level);
     }
     public static IEnumerator UpdateLevel(string bodyJsonString, string username, int lvl)
     {
         //string bodyJsonString = JsonConvert.SerializeObject(bodyObj);
         string level = lvl.ToString();
         string url = $"https://bugsquashers1.herokuapp.com/students/{username}"+"/"+level;
+        Debug.Log(url);
         UnityWebRequest request = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(bodyJsonString);
         request.uploadHandler = (UploadHandler)new UploadHandlerRaw(bodyRaw);
