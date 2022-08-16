@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class Puzzle : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class Puzzle : MonoBehaviour
 
     [SerializeField]
     GameObject[] rings;
+    [SerializeField]
+    GameObject gameCanvas;
+    [SerializeField]
+    GameObject successCanvas;
 
     //1 unit rotation = 30 degree clockwise
     //rotation speed, degrees per second
@@ -32,7 +37,12 @@ public class Puzzle : MonoBehaviour
     //flag
     private bool done = false;
     private bool completed = false;
+    private bool CFlag = false;
+    private bool ACFlag = false;
+    private bool rotateACFlag = false;
+    private int numberPressed;
 
+    private Quaternion startRotation;
 
     void Start()
     {
@@ -48,20 +58,18 @@ public class Puzzle : MonoBehaviour
         //disabling all rings
         disable();
 
-        //random generation of answer
-        //correctRotation = Random.Range(1, 3);
-        correctRotation = 2;
-        timeLeft = Mathf.Round(correctRotation);
-        Debug.Log(correctRotation);
-        //Debug.Log(timeLeft);
-        
-        //enabling only the required rings, as per value of n
         for (int i = 0; i < n; i++)
         {
             rings[i].SetActive(true);
-            rings[i].transform.Rotate(Vector3.back,rotationSpeed*Mathf.Pow(correctRotation,i+1));
+            startRotation = rings[i].transform.rotation;
         }
-        done = true;
+        //random generation of answer
+        
+        /*if (done == true)
+        {
+            //correctRotation = 2;
+            
+        }*/
     }
 
     void Update()
@@ -86,16 +94,26 @@ public class Puzzle : MonoBehaviour
             }
         }*/
 
-        if (done == true)
+        if (done == true || CFlag == true)
         {
-            if (completed == true)
+            if (completed == true || CFlag == true)
             {
                 guess -= animSpeed;
                 if (guess > 0)
                 {
-
                     rings[ringNo].transform.Rotate(Vector3.forward, (Mathf.Pow(rotationSpeed, 1)) * animSpeed);
+                }
 
+            }
+        }
+        if (rotateACFlag == true)
+        {
+            if (completed == true || ACFlag == true)
+            {
+                guess -= animSpeed;
+                if (guess > 0)
+                {
+                    rings[ringNo].transform.Rotate(Vector3.back, (Mathf.Pow(rotationSpeed, 1)) * animSpeed);
                 }
 
             }
@@ -106,12 +124,30 @@ public class Puzzle : MonoBehaviour
     public void guessAnswer()
     {
         Debug.Log("Guessed");
-        int numberPressed = int.Parse(answerInputField.text);
+        numberPressed = int.Parse(answerInputField.text);
        /* guessedRotation = guess = Mathf.Round(numberPressed);
         Debug.Log(guess);*/
         completed = true;
         StartCoroutine(rotate3(numberPressed));
 
+    }
+
+    public void rotateAC()
+    {
+        CFlag = false;
+        rotateACFlag = true;
+        Debug.Log("AC Rotate");
+        ACFlag = true;
+        StartCoroutine(rotate3(1));
+    }
+
+    public void rotateC()
+    {
+        ACFlag = false;
+        rotateACFlag = false;
+        Debug.Log("C Rotate");
+        CFlag = true;
+        StartCoroutine(rotate3(1));
     }
     IEnumerator rotate3(int x)
     {
@@ -132,8 +168,15 @@ public class Puzzle : MonoBehaviour
                     ringNo = 2;
                     yield return new WaitForSeconds(1);
                 }
-                
             }
+        }
+        CFlag = true;
+        ACFlag = true;
+        if(done == true && numberPressed == correctRotation)
+        {
+            successCanvas.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
     /*void rotate(int guess,int i,int animSpeed)
@@ -147,6 +190,31 @@ public class Puzzle : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             rings[i].SetActive(false);
+        }
+    }
+
+    public void onPlayClick()
+    {
+        done = true;
+        for (int i = 0; i < n; i++)
+        {
+            rings[i].transform.rotation = startRotation;
+        }
+        playGame();
+    }
+
+    public void playGame()
+    {
+        //correctRotation = Random.Range(1, 12);
+        correctRotation = 2;
+        timeLeft = Mathf.Round(correctRotation);
+        Debug.Log(correctRotation);
+        //Debug.Log(timeLeft);
+
+        //enabling only the required rings, as per value of n
+        for (int i = 0; i < n; i++)
+        {
+            rings[i].transform.Rotate(Vector3.back, rotationSpeed * Mathf.Pow(correctRotation, i + 1));
         }
     }
 

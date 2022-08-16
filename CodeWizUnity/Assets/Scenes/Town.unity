@@ -7660,50 +7660,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8920671978472407623, guid: 0921100c5fe753e458479d9fcd60c1e1, type: 3}
   m_PrefabInstance: {fileID: 443789031}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &456836530
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 456836532}
-  - component: {fileID: 456836531}
-  m_Layer: 0
-  m_Name: Navigation
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &456836531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 456836530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6cc43231bb16ce4a88d5445a71aad48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &456836532
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 456836530}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1359.067, y: 349.2248, z: 14.678574}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &456921984
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25628,10 +25584,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Player
       objectReference: {fileID: 0}
-    - target: {fileID: 6646265361373061291, guid: 0382632c60a447440820ef7724b50a59, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0382632c60a447440820ef7724b50a59, type: 3}
 --- !u!1 &1564873355 stripped
@@ -31541,30 +31493,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2712519824057981349, guid: a360849d4d5491442a439b7acb0455f2, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 456836531}
-    - target: {fileID: 2712519824057981349, guid: a360849d4d5491442a439b7acb0455f2, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: onHomeClick
-      objectReference: {fileID: 0}
-    - target: {fileID: 2712519824057981349, guid: a360849d4d5491442a439b7acb0455f2, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TownNav, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 2712519824256951723, guid: a360849d4d5491442a439b7acb0455f2, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 456836531}
-    - target: {fileID: 2712519824256951723, guid: a360849d4d5491442a439b7acb0455f2, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: onContinueClick
-      objectReference: {fileID: 0}
-    - target: {fileID: 2712519824256951723, guid: a360849d4d5491442a439b7acb0455f2, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: TownNav, Assembly-CSharp
-      objectReference: {fileID: 0}
     - target: {fileID: 2712519824421328080, guid: a360849d4d5491442a439b7acb0455f2, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -31615,7 +31543,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2712519824421328081, guid: a360849d4d5491442a439b7acb0455f2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a360849d4d5491442a439b7acb0455f2, type: 3}

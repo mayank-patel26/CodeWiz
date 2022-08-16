@@ -24,5 +24,15 @@ public class Navigation : MonoBehaviour {
     }public void Carnival(){
         SceneManager.LoadScene("Maze");
     }
+
+    public void onHome()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    public void onContinue()
+    {
+        SceneManager.LoadScene("Forest");
+    }
 }
 
