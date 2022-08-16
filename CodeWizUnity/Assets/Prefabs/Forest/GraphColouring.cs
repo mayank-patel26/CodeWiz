@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GraphColouring : MonoBehaviour
 {
@@ -15,6 +16,11 @@ public class GraphColouring : MonoBehaviour
     char selectedGemColor;
     bool canPlace;
     int correctCount = 0;
+    Vector3 gemSlotPos;
+    [SerializeField]
+    GameObject undoCanvas;
+    [SerializeField]
+    GameObject successCanvas;
     //Vector3[] startPos = new Vector3[5];
 
     char[] colors = new char[6];
@@ -75,6 +81,8 @@ public class GraphColouring : MonoBehaviour
                     if (placehit.rigidbody.CompareTag("node"))
                     {
                         char[] nodeStr = placehit.rigidbody.gameObject.name.ToString().ToCharArray();
+                        gemSlotPos = placehit.rigidbody.gameObject.transform.GetChild(0).gameObject.transform.position;
+                        Debug.Log(placehit.rigidbody.gameObject.transform.GetChild(0).gameObject.name);
                         int nodeColorIndex = (int)char.GetNumericValue(nodeStr[nodeStr.Length - 1]);
                         for(int j=1;j<6;j++)
                         {
@@ -84,8 +92,10 @@ public class GraphColouring : MonoBehaviour
                                 {
                                     canPlace = false;
                                     selectedObject.transform.position = startPos;
+                                    selectedObject = null;
                                     startPos = Vector3.zero;
                                     Cursor.visible = true;
+                                    undoCanvas.SetActive(true);
                                 }
                             }
                         }
@@ -94,15 +104,15 @@ public class GraphColouring : MonoBehaviour
                             colors[nodeColorIndex] = selectedGemColor;
                             Vector3 position = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Camera.main.WorldToScreenPoint(selectedObject.transform.position).z);
                             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(position);
-                            selectedObject.transform.position = new Vector3(worldPosition.x, 0.0f, worldPosition.z);
+                            selectedObject.transform.position = gemSlotPos;
                             selectedObject = null;
                             Cursor.visible = true;
                             correctCount++;
                             if(correctCount == 5)
                             {
-                                
-                                    Debug.Log("Completed!");
-                                
+                                undoCanvas.SetActive(false);
+                                successCanvas.SetActive(true);
+                                Debug.Log("Completed!");
                             }
                         }
                     }
@@ -155,5 +165,15 @@ public class GraphColouring : MonoBehaviour
         {
             Debug.Log("Collision Detected");
         }
+    }
+
+    public void UndoClick()
+    {
+        undoCanvas.SetActive(false);
+    }
+
+    public void onHomeBtnClick()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 }

@@ -24,7 +24,7 @@ router.post(
       }
       const time = new Array(3).fill(0).map(() => new Array().fill(0));
       const incat = new Array(3).fill(0).map(() => new Array().fill(0));
-      const score = new Array(3).fill(0);
+      const score = [];
       defaultMentor = "";
       let lvl = {
         time: time,

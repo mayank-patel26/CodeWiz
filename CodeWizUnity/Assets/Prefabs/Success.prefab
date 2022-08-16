@@ -145,7 +145,6 @@ GameObject:
   - component: {fileID: 2712519824151096423}
   - component: {fileID: 2712519824151096416}
   - component: {fileID: 2712519824151096417}
-  - component: {fileID: 2712519824151096422}
   m_Layer: 0
   m_Name: Success
   m_TagString: Untagged
@@ -214,25 +213,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2712519824151096422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2712519824151096420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0c667cc43acc5a4c9e68715205d9e45, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  usernameInputField: {fileID: 0}
-  passwordInputField: {fileID: 0}
-  EmptyFields: {fileID: 0}
-  NoStudentFound: {fileID: 2712519825372437340}
-  IncorrectPass: {fileID: 0}
-  login: {fileID: 2712519824151096420}
-  mainmenu: {fileID: 0}
 --- !u!1 &2712519824256951721
 GameObject:
   m_ObjectHideFlags: 0

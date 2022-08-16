@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LeverPuzzle : MonoBehaviour
 {
@@ -24,9 +25,10 @@ public class LeverPuzzle : MonoBehaviour
 
     [SerializeField] GameObject cutscene;
     [SerializeField] GameObject successM;
+    [SerializeField] GameObject mainPlayer;
 
     private int torchCount;
-    private bool isDone;
+    private bool isDone, levelComplete;
 
     #region SwitchAnims
     private Animator SAnim1;
@@ -37,6 +39,7 @@ public class LeverPuzzle : MonoBehaviour
 
     private void Start()
     {
+        levelComplete = false;
         SAnim1 = Switch1.transform.GetChild(1).gameObject.GetComponent<Animator>();
         SAnim2 = Switch2.transform.GetChild(1).gameObject.GetComponent<Animator>();
         SAnim3 = Switch3.transform.GetChild(1).gameObject.GetComponent<Animator>();
@@ -57,7 +60,9 @@ public class LeverPuzzle : MonoBehaviour
         {
             if (torchCount == 4)
             {
+                Debug.Log("Update Called!");
                 doorAnimator.Play("GridUp");
+                //  levelComplete = true;
                 Invoke("startCutScene", 2.5f);
                 isDone = true;
             }
@@ -66,13 +71,19 @@ public class LeverPuzzle : MonoBehaviour
 
     void startCutScene()
     {
-        cutscene.SetActive(true);
-        Invoke("showSuccess", 5.0f);
-     
+        if(levelComplete == false)
+        {
+            cutscene.SetActive(true);
+            Invoke("showSuccess", 5.0f);
+            levelComplete = true;
+        }
     }
 
     void showSuccess()
     {
+        mainPlayer.SetActive(false);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         cutscene.SetActive(false);
         successM.SetActive(true);
     }
@@ -139,5 +150,15 @@ public class LeverPuzzle : MonoBehaviour
             torch.SetActive(true);
             torchCount++;
         }
+    }
+
+    public void onHomeClick()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    public void onContinueClick()
+    {
+        SceneManager.LoadScene("Maze");
     }
 }

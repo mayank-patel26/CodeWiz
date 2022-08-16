@@ -20,6 +20,9 @@ public class Navigation : MonoBehaviour {
     }
     public void Library(){
         SceneManager.LoadScene("Level_1");
+
+    }public void Carnival(){
+        SceneManager.LoadScene("Maze");
     }
 }
 
