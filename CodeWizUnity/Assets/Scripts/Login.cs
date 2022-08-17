@@ -36,7 +36,7 @@ public class Login : MonoBehaviour
         {
             EmptyFields.gameObject.SetActive(true);
         }
-        if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+        else
         {
             Student student = new Student
             {
@@ -64,43 +64,6 @@ public class Login : MonoBehaviour
                 login.SetActive(false);
                 mainmenu.SetActive(true);
             }
-
-            /*Debug.Log(currentStudent.ToString());*/
-            /*SceneManager.LoadScene("Maze");*/
         }
     }
-
-    //manual json creation >i am stupid :(<
-    /*IEnumerator updateStudentLevel()
-    {
-        string username = "alphacentauri1";
-        int l = 3;
-        string lvl = l.ToString();
-        int[][] time = new int[][]
-        {
-            new int[]{8,8,8},
-            new int[]{8,8,8},
-            new int[]{8,8,8}
-        };
-        int[][] incat = new int[][]
-        {
-            new int[]{8,8,8},
-            new int[]{8,8,8},
-            new int[]{8,8,8}
-        };
-        
-        int[] score = new int[3] { 1000, 2000, 3000 };
-
-        Level updatedLevel = new Level();
-        updatedLevel.time = time;
-        updatedLevel.score = score;
-        updatedLevel.incat = incat;
-        updatedLevel.badges = "gold";
-        updatedLevel.helpReq = true;
-        updatedLevel.mentorUser = null;
-        string jsonupdatedlevel = JsonConvert.SerializeObject(updatedLevel);
-        Debug.Log(jsonupdatedlevel);
-        yield return StartCoroutine(APIConnections.UpdateLevel(jsonupdatedlevel, username, lvl));
-        currentStudent = APIConnections.currentStudent;
-    }*/
 }

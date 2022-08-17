@@ -2557,24 +2557,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'These rings have been shuffled. Try and  bring them to their correct orientation
-    by entering a number in down below. The outermost ring rotates for a number of
-    times, specified by the number(x) you enter.
-
-
-    For each rotation of the outer
-    loop, the inner rotates by x.  To test for a trial rotation with x=3, press t
-    on your keyboard.
-
-
-    In programming these rings are called loops, and loops
-    one inside another are called nested loops.
-
-    (For more information visit
-    the links on your student dashboard)
-
-
-'
+  m_text: "These rings have been shuffled. Try and  bring them to their correct orientation
+    by entering a number down below. The outermost ring rotates for a number of times,
+    specified by the number(x) you enter.\n\nFor each rotation of the outer ring,
+    the inner rotates by x.  To test for a trial rotation with x=3, press t on your
+    keyboard. To rotate each loop individually click on the ring and press the rotate
+    arrows. \n\nNote: The rings will be reset to the original shuffled orientation
+    on clicking enter. To manually reset them, click the rest button. \n\nIn programming
+    these rings are called loops, and loops one inside another are called nested
+    loops.\n(For more information visit the links on your student dashboard)\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ab0846f92c78d3a46ae01ba3ff142563, type: 2}
   m_sharedMaterial: {fileID: 4548936879819263259, guid: ab0846f92c78d3a46ae01ba3ff142563, type: 2}
@@ -2583,8 +2574,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4292138196
+  m_fontColor: {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2601,8 +2592,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 35
-  m_fontSizeBase: 35
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
