@@ -19,7 +19,8 @@ public class StringReversal : MonoBehaviour
     char[] correct;
     private void Start()
     {
-        difficulty=DynamicDifficulty.getinitialN(levelNumber);
+        APIConnections.FetchLevel(levelNumber);
+        DynamicDifficulty.getinitialN();
         startGame();
     }
     void startGame()

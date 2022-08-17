@@ -7,6 +7,7 @@ TagManager:
   - CinemachineTarget
   - drag
   - node
+  - Rings
   layers:
   - Default
   - TransparentFX

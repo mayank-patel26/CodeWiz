@@ -57,8 +57,8 @@ public class Login : MonoBehaviour
             else
             {
                 
-                currentUsername = APIConnections.currentUsername;
-                yield return StartCoroutine(APIConnections.FetchLevel(currentUsername, 1));
+                //currentUsername = APIConnections.currentUsername;
+                yield return StartCoroutine(APIConnections.FetchLevel(1));
                 currentLevel = APIConnections.studentLevel;
                 Debug.Log(JsonConvert.SerializeObject(currentLevel));
                 login.SetActive(false);

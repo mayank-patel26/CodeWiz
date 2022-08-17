@@ -72,17 +72,17 @@ public class DynamicDifficulty
         return (long)(timer.ElapsedMilliseconds/1000);
     }
 
-    public static int getinitialN(int levelNumber)
+    public static void getinitialN()
     {
-        APIConnections.FetchLevel(APIConnections.currentUsername,levelNumber);
+        Level level = APIConnections.studentLevel;
         int difficulty = 0;
-        if (APIConnections.studentLevel.time[2].Length != 0)
+        if (level.time[2].Length != 0)
             difficulty = 2;
-        else if (APIConnections.studentLevel.time[1].Length != 0)
+        else if (level.time[1].Length != 0)
             difficulty = 1;
         else
             difficulty = 0;
-        return difficulty;
+        currentDifficulty = difficulty;
     }
 
 }
