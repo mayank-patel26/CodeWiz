@@ -18,7 +18,6 @@ public class DropObject : MonoBehaviour, IDropHandler
     
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log(this.transform.parent.name);
         if (eventData.pointerDrag != null)
         {
             RectTransform draggedObject = eventData.pointerDrag.GetComponent<RectTransform>();

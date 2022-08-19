@@ -22,6 +22,8 @@ public class Login : MonoBehaviour
     {
         EmptyFields.gameObject.SetActive(false);
         NoStudentFound.gameObject.SetActive(false);IncorrectPass.gameObject.SetActive(false);
+        if(APIConnections.currentUsername!="")
+            this.gameObject.SetActive(false);
     }
 
     public void onButtonClick()

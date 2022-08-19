@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 public class StringReversal : MonoBehaviour
 {
-    int levelNumber=0;
+    int levelNumber=2;
     [SerializeField]
     GameObject[] runes;
     int[] n = { 5,8,12};
@@ -17,11 +17,23 @@ public class StringReversal : MonoBehaviour
     private GameObject runeObj;
     [SerializeField] private GameObject correctWord;
     char[] correct;
+    [SerializeField] private GameObject stringReversalPanel;
+    bool start = false;
+    [SerializeField] private GameObject successPanel;
+    [SerializeField] private GameObject mainPlayer;
     private void Start()
     {
         APIConnections.FetchLevel(levelNumber);
         DynamicDifficulty.getinitialN();
-        startGame();
+    }
+    private void Update()
+    {
+        if (start)
+        {
+            start = false;
+            startGame();
+        }    
+           
     }
     void startGame()
     {
@@ -55,6 +67,12 @@ public class StringReversal : MonoBehaviour
         }
         return new string(chars);
     }
+    public void shutDialogue(GameObject dialogue)
+    {
+        dialogue.SetActive(false);
+        stringReversalPanel.SetActive(true);
+        start = true;
+    }
     string RandomString(int length)
     {
         string alphabet = "abdfhijklmnopqrstuvwxyz";
@@ -70,7 +88,7 @@ public class StringReversal : MonoBehaviour
     }
     public IEnumerator check()
     {
-        yield return new WaitForSeconds(0.5f);
+        
         int c = 0;
         for (int i = 0; i < n[difficulty]; i++)
         {
@@ -82,13 +100,34 @@ public class StringReversal : MonoBehaviour
         }
         if (c == n[difficulty])
         {
-            DynamicDifficulty.NextDifficulty((double)DynamicDifficulty.getTimeElapsed(),difficulty,0);
+            long time = DynamicDifficulty.getTimeElapsed();
+            APIConnections.makeLevelChanges(DynamicDifficulty.score,difficulty,time,levelNumber,0); 
+            yield return new WaitForSeconds(0.5f);
+            APIConnections.UpdateLevel(levelNumber);
+            DynamicDifficulty.NextDifficulty((double)DynamicDifficulty.getTimeElapsed(), difficulty, 0);
             difficulty = DynamicDifficulty.currentDifficulty;
+            yield return new WaitForSeconds(0.5f);
+            APIConnections.FetchLevel(levelNumber);
             //update score
             Destroy(runeObj);
             //if difficulty = 3 show success panel and go to next level, else next difficulty 
-            Debug.Log("Success!");
-        }
-            
+            if (difficulty == 3)
+            {
+                successPanel.SetActive(true);
+                stringReversalPanel.SetActive(false);
+            }    
+            else
+                start = true;
+        }     
+    }
+    public void forest()
+    {
+        successPanel.SetActive(false);
+        mainPlayer.SetActive(true);
+        Invoke("graphLoad", 4);
+    }
+    public void graphLoad()
+    {
+        SceneManager.LoadScene("GraphColouring");
     }
 }

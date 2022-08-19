@@ -63,6 +63,7 @@ public class GraphColouring : MonoBehaviour
                     }
                     
                     selectedObject = hit.collider.gameObject;
+                    selectedObject=Instantiate(selectedObject);
                     startPos =selectedObject.transform.position;
                     char[] tempGem = selectedObject.name.ToCharArray();
                     selectedGemColor = tempGem[0];
@@ -82,7 +83,7 @@ public class GraphColouring : MonoBehaviour
                     {
                         char[] nodeStr = placehit.rigidbody.gameObject.name.ToString().ToCharArray();
                         gemSlotPos = placehit.rigidbody.gameObject.transform.GetChild(0).gameObject.transform.position;
-                        Debug.Log(placehit.rigidbody.gameObject.transform.GetChild(0).gameObject.name);
+                        //Debug.Log(placehit.rigidbody.gameObject.transform.GetChild(0).gameObject.name);
                         int nodeColorIndex = (int)char.GetNumericValue(nodeStr[nodeStr.Length - 1]);
                         for(int j=1;j<6;j++)
                         {
@@ -91,10 +92,9 @@ public class GraphColouring : MonoBehaviour
                                 if (colors[j] == selectedGemColor)
                                 {
                                     canPlace = false;
-                                    selectedObject.transform.position = startPos;
-                                    selectedObject = null;
                                     startPos = Vector3.zero;
                                     Cursor.visible = true;
+                                    Destroy(selectedObject);
                                     undoCanvas.SetActive(true);
                                 }
                             }

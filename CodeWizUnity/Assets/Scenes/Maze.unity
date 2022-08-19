@@ -1393,7 +1393,7 @@ PrefabInstance:
       objectReference: {fileID: 1542085820}
     - target: {fileID: 2712519824256951723, guid: a360849d4d5491442a439b7acb0455f2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Town
+      value: Forest
       objectReference: {fileID: 0}
     - target: {fileID: 2712519824256951723, guid: a360849d4d5491442a439b7acb0455f2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

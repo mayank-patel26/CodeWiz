@@ -23,7 +23,7 @@ public class LeverPuzzle : MonoBehaviour
     private GameObject Switch4;
     [SerializeField] Animator doorAnimator;
 
-    [SerializeField] GameObject cutscene;
+    [SerializeField] GameObject dialogue;
     [SerializeField] GameObject successM;
     [SerializeField] GameObject mainPlayer;
 
@@ -49,7 +49,7 @@ public class LeverPuzzle : MonoBehaviour
         torch2.SetActive(false);
         torch3.SetActive(false);
         torch4.SetActive(false);
-        isDone = true;
+        isDone = false;
     }
 
     private void Update()
@@ -63,37 +63,33 @@ public class LeverPuzzle : MonoBehaviour
                 Debug.Log("Update Called!");
                 doorAnimator.Play("GridUp");
                 //  levelComplete = true;
-                Invoke("startCutScene", 2.5f);
+                //Invoke("startCutScene", 2.5f);
+                showDialogue();
                 isDone = true;
             }
         }
     }
-
-    void startCutScene()
+    public void showSuccess()
     {
-        if(levelComplete == false)
-        {
-            cutscene.SetActive(true);
-            Invoke("showSuccess", 5.0f);
-            levelComplete = true;
-        }
+        dialogue.SetActive(false);
+        successM.SetActive(true);
     }
 
-    void showSuccess()
+    void showDialogue()
     {
         mainPlayer.SetActive(false);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        cutscene.SetActive(false);
-        successM.SetActive(true);
+        //cutscene.SetActive(false);
+        dialogue.SetActive(true);
     }
 
     private void OnMouseDown()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0)&&!isDone)
         {
             
-            isDone = false;
+            //isDone = false;
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))

@@ -52,12 +52,10 @@ public class DraggableObject : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         startPosition = transform.position;
         canvasGroup.alpha = 0.8f;
         canvasGroup.blocksRaycasts = false;
-        //Debug.Log("OnBeginDrag");
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnDrag");
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 

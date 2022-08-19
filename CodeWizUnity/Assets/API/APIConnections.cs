@@ -9,7 +9,7 @@ public class APIConnections : MonoBehaviour
     public static Level studentLevel;
     //public static Student currentStudent;
     public static long loginResCode;
-    public static string currentUsername;
+    public static string currentUsername="";
     public static string updatedLevelString;
     public static IEnumerator FetchLevel(int lvl)
     {
