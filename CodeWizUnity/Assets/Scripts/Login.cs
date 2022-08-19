@@ -13,6 +13,7 @@ public class Login : MonoBehaviour
     [SerializeField] TMP_Text IncorrectPass;
     [SerializeField] GameObject login;
     [SerializeField] GameObject mainmenu;
+    [SerializeField] GameObject cutscene;
 
     //public static Student currentStudent;
     public static Level currentLevel;
@@ -20,10 +21,19 @@ public class Login : MonoBehaviour
 
     private void Start()
     {
+        login.SetActive(false);
+        cutscene.SetActive(true);
+        Invoke("showLogin", 15.0f);
         EmptyFields.gameObject.SetActive(false);
         NoStudentFound.gameObject.SetActive(false);IncorrectPass.gameObject.SetActive(false);
         if(APIConnections.currentUsername!="")
             this.gameObject.SetActive(false);
+    }
+
+    public void showLogin()
+    {
+        cutscene.SetActive(false);
+        login.SetActive(true);
     }
 
     public void onButtonClick()
