@@ -16,6 +16,12 @@ const studentSchema = new Schema({
     },
     level:{
         type: Array, required: false
+    },
+    followings:{
+        type: Array, default: []
+    },
+    followers:{
+        type: Array, default: []
     }
 },
 {

@@ -3,10 +3,10 @@ POST https://bugsquashers1.herokuapp.com/students/register
 Content-Type: application/json
 
 {
-    "fullname": "hamilton",
-    "email": "hamilton@gmail.com",
-    "password": "hamilton",
-    "username": "hamilton"
+    "fullname": "hamilton3",
+    "email": "hamilton3@gmail.com",
+    "password": "hamilton3",
+    "username": "hamilton3"
 }
 
 ###
@@ -14,8 +14,8 @@ POST https://bugsquashers1.herokuapp.com/students/login
 Content-Type: application/json
 
 {
-            "username": "testStudent4",
-            "password": "testStudent4"
+            "username": "hamilton",
+            "password": "hamilton"
 }
 
 ###

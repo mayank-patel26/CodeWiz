@@ -10,6 +10,8 @@ const config = require("./config");
 
 const studentsRouter = require("./routes/students");
 const teachersRouter = require("./routes/teachers");
+const conversationRouter = require("./routes/conversations");
+const messageRouter = require("./routes/messages");
 
 app.use(logger("dev"));
 
@@ -36,6 +38,8 @@ app.use(express.json());
 
 app.use("/students", studentsRouter);
 app.use("/teachers", teachersRouter);
+app.use("/conversations", conversationRouter);
+app.use("/messages", messageRouter);
 
 app.listen(port, function () {
   console.log("Runnning on " + port);

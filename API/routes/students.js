@@ -2,7 +2,6 @@ const express = require("express");
 const Student = require("../models/student");
 const router = express.Router();
 const bcryptjs = require("bcryptjs");
-const student = require("../models/student");
 const { body, validationResult } = require("express-validator");
 const config = require("../config");
 var jwt = require('jsonwebtoken');
@@ -24,13 +23,14 @@ router.post(
       }
       const time = new Array(3).fill(0).map(() => new Array().fill(0));
       const incat = new Array(3).fill(0).map(() => new Array().fill(0));
-      const score = [];
-      defaultMentor = "";
+      const score = [0,0,0];
+      const defaultMentor = [];
+      const defaultBadge = "";
       let lvl = {
         time: time,
         score: score,
         incat: incat,
-        badges: null,
+        badges: defaultBadge,
         helpReq: false,
         mentorUser: defaultMentor
       };
@@ -38,7 +38,7 @@ router.post(
         _id: req.body.username,
         password: (await bcryptjs.hash(req.body.password, 10)).toString(),
         email: req.body.email,
-        fullname: req.body.fullname,
+        fullname: req.body.fullname
       });
 
       for (let i = 0; i < 7; i++) {
@@ -139,12 +139,26 @@ router.post("/:username/:lvl", async (req, res) => {
 });
 
 //Getting all students (WEBSITE)
-router.get("/", async (req, res) => {
+router.get("/getAllStudents", async (req, res) => {
   try {
     const students = await Student.find().clone();
     res.json(students);
   } catch (err) {
     res.status(400).json({ message: err.messages });
+  }
+});
+
+//Getting all students (WEBSITE)
+router.get("/", async (req, res) => {
+  const userId = req.query.userId;
+  const username = req.query.username;
+  try {
+    const user = userId
+      ? await Student.findById(userId)
+      : await Student.findOne({ _id: username });
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
@@ -155,6 +169,48 @@ router.post("/getStudent", async (req, res) => {
     res.status(404).json({ message: "Cannot find student" });
   } else {
     res.status(201).send(student);
+  }
+});
+
+//follow
+router.put("/follow/:id", async (req, res) => {
+  if (req.body.userId !== req.params.id) {
+    try {
+      const user = await Student.findById(req.params.id);
+      const currentUser = await Student.findById(req.body.userId);
+      if (!user.followers.includes(req.body.userId)) {
+        await user.updateOne({ $push: { followers: req.body.userId } });
+        await currentUser.updateOne({ $push: { followings: req.params.id } });
+        res.status(200).json("user has been followed");
+      } else {
+        res.status(403).json("you already follow this user");
+      }
+    } catch (err) {
+      res.status(500).json({message: err.message});
+    }
+  } else {
+    res.status(403).json("you cant follow yourself");
+  }
+});
+
+// unfollow
+router.put("/unfollow/:id", async (req, res) => {
+  if (req.body.userId !== req.params.id) {
+    try {
+      const user = await Student.findById(req.params.id);
+      const currentUser = await Student.findById(req.body.userId);
+      if (user.followers.includes(req.body.userId)) {
+        await user.updateOne({ $pull: { followers: req.body.userId } });
+        await currentUser.updateOne({ $pull: { followings: req.params.id } });
+        res.status(200).json("user has been unfollowed");
+      } else {
+        res.status(403).json("you dont follow this user");
+      }
+    } catch (err) {
+      res.status(500).json({message: err.message});
+    }
+  } else {
+    res.status(403).json("you cant unfollow yourself");
   }
 });
 
