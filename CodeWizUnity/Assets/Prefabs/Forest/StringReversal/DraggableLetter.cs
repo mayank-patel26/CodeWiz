@@ -40,7 +40,7 @@ public class DraggableLetter : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         eventData.pointerDrag.GetComponent<RectTransform>().GetComponent<DraggableLetter>().validDrop = true;
         this.gameObject.transform.GetChild(0).GetComponent<TMP_Text>().text = eventData.pointerDrag.gameObject.transform.GetChild(0).GetComponent<TMP_Text>().text;
         Destroy(eventData.pointerDrag.gameObject);
-        StartCoroutine(obj.check());
+        obj.check();
     }
 
     public void OnEndDrag(PointerEventData eventData)

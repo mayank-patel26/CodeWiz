@@ -22,7 +22,7 @@ public class DynamicDifficulty
 
         while (next_difficulty != next_level)
         {
-            if (difficulty == easy_weight && time > 500)
+            if (difficulty == easy_weight && time >500)
             {
                 next_difficulty = easy_weight;
                 difficulty = next_difficulty;

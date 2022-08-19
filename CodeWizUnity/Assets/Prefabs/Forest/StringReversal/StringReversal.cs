@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class StringReversal : MonoBehaviour
 {
-    int levelNumber=2;
+    int levelNumber=3;
     [SerializeField]
     GameObject[] runes;
     int[] n = { 5,8,12};
@@ -86,7 +86,7 @@ public class StringReversal : MonoBehaviour
             );
         return randomString;
     }
-    public IEnumerator check()
+    public void check()
     {
         
         int c = 0;
@@ -102,12 +102,10 @@ public class StringReversal : MonoBehaviour
         {
             long time = DynamicDifficulty.getTimeElapsed();
             APIConnections.makeLevelChanges(DynamicDifficulty.score,difficulty,time,levelNumber,0); 
-            yield return new WaitForSeconds(0.5f);
-            APIConnections.UpdateLevel(levelNumber);
+            StartCoroutine(APIConnections.UpdateLevel(levelNumber));
             DynamicDifficulty.NextDifficulty((double)DynamicDifficulty.getTimeElapsed(), difficulty, 0);
             difficulty = DynamicDifficulty.currentDifficulty;
-            yield return new WaitForSeconds(0.5f);
-            APIConnections.FetchLevel(levelNumber);
+            //APIConnections.FetchLevel(levelNumber);
             //update score
             Destroy(runeObj);
             //if difficulty = 3 show success panel and go to next level, else next difficulty 

@@ -12,5 +12,5 @@ public class Level
     public int[][] incat;
     public string badges;
     public bool helpReq;
-    public string mentorUser;
+    public string[] mentorUser;
 }

@@ -59,8 +59,8 @@ public class APIConnections : MonoBehaviour
             if (!request.downloadHandler.text.Equals("null"))
             {
                 loginResCode = request.responseCode;
-                //Debug.Log(request.downloadHandler.text);
-                Student currentStudent = JsonConvert.DeserializeObject<Student>(request.downloadHandler.text);
+                Debug.Log(request.downloadHandler.text);
+                Student currentStudent = JsonUtility.FromJson<Student>(request.downloadHandler.text);
                 currentUsername = currentStudent.ToString();
                 Debug.Log(currentUsername);
                 Debug.Log(JsonConvert.SerializeObject(currentStudent));
@@ -84,23 +84,25 @@ public class APIConnections : MonoBehaviour
         }
         timeArray[timeArray.Length - 1] = timetaken;
         studentLevel.time[difficulty] = timeArray;
-        
-        long[] incatArray = new long[studentLevel.time[difficulty].Length + 1];
+        Debug.Log(timeArray);
+        /*int[] incatArray = new int[studentLevel.incat[difficulty].Length + 1];
         for (int i = 0; i < incatArray.Length - 1; i++)
         {
-            incatArray[i] = studentLevel.time[difficulty][i];
+            incatArray[i] = studentLevel.incat[difficulty][i];
         }
         incatArray[timeArray.Length - 1] = incat;
-        studentLevel.time[difficulty] = incatArray;
+        studentLevel.incat[difficulty] = incatArray;*/
 
         studentLevel.score[difficulty] = updatedScore;
 
         updatedLevelString = JsonConvert.SerializeObject(studentLevel);
+        Debug.Log(updatedLevelString);
     }
     public static IEnumerator UpdateLevel(int lvl)
     {
         //string bodyJsonString = JsonConvert.SerializeObject(bodyObj);
         string level = lvl.ToString();
+        Debug.Log(currentUsername);
         string url = $"https://bugsquashers1.herokuapp.com/students/{currentUsername}"+"/"+level;
         Debug.Log(url);
         UnityWebRequest request = new UnityWebRequest(url, "POST");

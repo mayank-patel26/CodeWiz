@@ -4,12 +4,13 @@ using TMPro;
 
 public class Puzzle : MonoBehaviour
 {
-    int levelNumber = 1;
+    int levelNumber = 2;
     //no of rings, from shlok's formula
     int n;
 
     [SerializeField]
     GameObject[] rings;
+    [SerializeField] GameObject[] correctRings;
     [SerializeField]
     GameObject gameCanvas;
     [SerializeField]
@@ -33,7 +34,7 @@ public class Puzzle : MonoBehaviour
     private int ringNo;
     private bool completed = false;
     private bool CFlag = false;
-    private bool ACFlag = true;
+    private bool ACFlag = false;
     private int currentRing = -1;
     private int numberPressed;
     private Quaternion startRotation;
@@ -50,15 +51,20 @@ public class Puzzle : MonoBehaviour
         failureCanvas.SetActive(false);
         DynamicDifficulty.startTimer();
         n = DynamicDifficulty.currentDifficulty + 1;
+        //n=1;
+        Debug.Log(n);
         correctRotation = Random.Range(1, 3);
-        int i;
-        for (i = 0; i < n; i++)
+        //correctRotation = 2;
+        Debug.Log(correctRotation);
+        for (int i = 0; i <n; i++)
         {
-            rings[i].SetActive(true);
-            rings[i].transform.Rotate(Vector3.back, rotationSpeed * Mathf.Pow(correctRotation, i + 1));
+            Debug.Log(i);
+            rings[2-i].SetActive(true);
+            correctRings[2 - i].SetActive(true);
+            rings[2-i].transform.Rotate(Vector3.back, rotationSpeed * Mathf.Pow(correctRotation, i+1));
         }
         //random generation of answer
-        rings[0].transform.parent.GetChild(3).GetChild(n - 1).gameObject.SetActive(true);
+        //rings[0].transform.parent.GetChild(3).GetChild(n - 1).gameObject.SetActive(true);
     }
 
     void Update()
@@ -99,9 +105,11 @@ public class Puzzle : MonoBehaviour
         }
         if (completed == true || (CFlag == true && ACFlag == false))
         {
+            
             guess -= animSpeed;
             if (guess > 0)
             {
+                //Debug.Log("rotating");
                 rings[ringNo].transform.Rotate(Vector3.forward, (Mathf.Pow(rotationSpeed, 1)) * animSpeed);
             }
             else
@@ -110,7 +118,7 @@ public class Puzzle : MonoBehaviour
             }
         }
 
-        if ((ACFlag == true && CFlag == false) || completed == true)
+        if ((ACFlag == true && CFlag == false))
         {
             guess -= animSpeed;
             if (guess > 0)
@@ -146,8 +154,8 @@ public class Puzzle : MonoBehaviour
     {
         for (int i = 0; i < n; i++)
         {
-            rings[i].transform.localRotation = startRotation;
-            rings[i].transform.Rotate(Vector3.back, rotationSpeed * Mathf.Pow(correctRotation, i + 1));
+            rings[2-i].transform.localRotation = startRotation;
+            rings[2-i].transform.Rotate(Vector3.back, rotationSpeed * Mathf.Pow(correctRotation, i +1));
         }
 
     }
@@ -159,8 +167,9 @@ public class Puzzle : MonoBehaviour
             return;
         timeElapsed = DynamicDifficulty.getTimeElapsed();
         numberPressed = int.Parse(answerInputField.text);
-        completed = true;
+        
         reset();
+        completed = true;
         if (n == 3)
             StartCoroutine(rotate3(numberPressed, false));
         else if (n == 2)
@@ -222,8 +231,10 @@ public class Puzzle : MonoBehaviour
         {
             guess = 1;
             ringNo = 2;
+            //Debug.Log("waiting");
             yield return new WaitForSeconds(1);
         }
+
         completed = false;
         if (!test)
             complete(x);
@@ -235,9 +246,10 @@ public class Puzzle : MonoBehaviour
         if (x == correctRotation)
         {
             DynamicDifficulty.NextDifficulty(timeElapsed, n, 0);
-            APIConnections.makeLevelChanges(levelNumber, n, timeElapsed, levelNumber, 0);
-            APIConnections.UpdateLevel(levelNumber);
-            APIConnections.FetchLevel(levelNumber);
+            Debug.Log(timeElapsed);
+            APIConnections.makeLevelChanges(levelNumber, n-1, timeElapsed, levelNumber, 0);
+            StartCoroutine(APIConnections.UpdateLevel(levelNumber));
+            StartCoroutine(APIConnections.FetchLevel(levelNumber));
             if (DynamicDifficulty.currentDifficulty < 3)
                 startGame();
             else

@@ -11,6 +11,8 @@ public class Student
     public string email;
     [SerializeField]
     public Level[] level;
+    public string[] followings;
+    public string[] followers;
     public int __v;
 
     public override string ToString()
