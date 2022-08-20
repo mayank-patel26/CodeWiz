@@ -21,13 +21,24 @@ public class Login : MonoBehaviour
 
     private void Start()
     {
-        login.SetActive(false);
-        cutscene.SetActive(true);
-        Invoke("showLogin", 15.0f);
+
         EmptyFields.gameObject.SetActive(false);
         NoStudentFound.gameObject.SetActive(false);IncorrectPass.gameObject.SetActive(false);
         if(APIConnections.currentUsername!="")
-            this.gameObject.SetActive(false);
+        {
+            //this.gameObject.SetActive(false);
+            login.SetActive(false);
+            cutscene.SetActive(false);
+            mainmenu.SetActive(true);
+
+        }
+        else
+        {
+            login.SetActive(false);
+            cutscene.SetActive(true);
+            Invoke("showLogin", 6.5f);
+        }
+            
     }
 
     public void showLogin()

@@ -19,7 +19,7 @@ namespace DragDropScripts.IfElse
         [SerializeField] private GameObject Steps;
         [SerializeField] private GameObject CodingPanel;
         [SerializeField] private GameObject MainPlayer;
-        bool One=true, Two=true, Three=true, Four=true;
+        bool One=false, Two=false, Three=false, Four=false;
         public void check()
         {
             Steps.SetActive(true);
@@ -34,10 +34,13 @@ namespace DragDropScripts.IfElse
                     else
                         text.text += "Rest of the blocks not setup";
                 }
+                Debug.Log(One + "," + Two + "," + Three + "," + Four);
                 if (One && Two && Three && Four)
                 {
                     CodingPanel.SetActive(false);
                     MainPlayer.SetActive(true);
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = false;
                 }
                     
             }
@@ -92,9 +95,11 @@ namespace DragDropScripts.IfElse
         }
         bool handleIf1(Transform obj)
         {
+            Debug.Log("Here1");
             bool A=false, C=false, D=false;
-            for(int i=1;i<obj.childCount-1;i++)
+            for(int i=1;i<obj.childCount;i++)
             {
+                Debug.Log("Here2");
                 char a = handleTogglePressed(obj.GetChild(i));
                 switch (a)
                 {
@@ -122,10 +127,10 @@ namespace DragDropScripts.IfElse
                 One = true;
             return One;
         }
-        bool handleIf2(Transform obj)
+        bool handleIf3(Transform obj)
         {
             bool B=false, D = false;
-            for (int i = 1; i < obj.childCount - 1; i++)
+            for (int i = 1; i < obj.childCount; i++)
             {
                 char a = handleTogglePressed(obj.GetChild(i));
                 switch (a)
@@ -134,14 +139,14 @@ namespace DragDropScripts.IfElse
                         text.text += a + " is not a valid torch\n";
                         return false;
                     case 'A':
-                        text.text += "Switch 2 should not toggle torch A";
+                        text.text += "Switch 3 should not toggle torch A";
                         return false;
                     case 'B':
                         if (!B)
                             B = true;
                         break;
                     case 'C':
-                        text.text += "Switch 2 should not toggle torch C";
+                        text.text += "Switch 3 should not toggle torch C";
                         return false;
                     case 'D':
                         if (!D)
@@ -153,10 +158,10 @@ namespace DragDropScripts.IfElse
                 Two = true;
             return Two;
         }
-        bool handleIf3(Transform obj)
+        bool handleIf2(Transform obj)
         {
             bool B = false, C=false, D = false;
-            for (int i = 1; i < obj.childCount - 1; i++)
+            for (int i = 1; i < obj.childCount; i++)
             {
                 char a = handleTogglePressed(obj.GetChild(i));
                 switch (a)
@@ -165,7 +170,7 @@ namespace DragDropScripts.IfElse
                         text.text += a + " is not a valid torch\n";
                         return false;
                     case 'A':
-                        text.text += "Switch 4 should not toggle torch A\n";
+                        text.text += "Switch 2 should not toggle torch A\n";
                         return false;
                     case 'B':
                         if (!B)
@@ -188,7 +193,7 @@ namespace DragDropScripts.IfElse
         bool handleIf4(Transform obj)
         {
             bool C = false, D = false;
-            for (int i = 1; i < obj.childCount - 1; i++)
+            for (int i = 1; i < obj.childCount; i++)
             {
                 char a = handleTogglePressed(obj.GetChild(i));
                 switch (a)

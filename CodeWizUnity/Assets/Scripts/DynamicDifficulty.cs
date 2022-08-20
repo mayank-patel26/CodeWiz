@@ -4,7 +4,7 @@ public class DynamicDifficulty
 {
     public static int score;
     public static int currentDifficulty;
-    public static void NextDifficulty(double time,int difficulty,int hints_taken)
+    public static void NextDifficulty(int time,int difficulty,int hints_taken)
     {
         /*int hints_taken = 2;*/
 
@@ -18,44 +18,42 @@ public class DynamicDifficulty
         int medium = 5000;
         int hard = 10000;
 
-        double score = 0D;
 
-        while (next_difficulty != next_level)
-        {
-            if (difficulty == easy_weight && time >500)
+        
+            if (difficulty == easy_weight && time >60)
             {
                 next_difficulty = easy_weight;
-                difficulty = next_difficulty;
+            currentDifficulty = next_difficulty;
             }
-            else if (difficulty == easy_weight && time <= 500)
+            else if (difficulty == easy_weight && time <= 60)
             {
-                score = (easy) - (time * 1.5) - (hints_taken) * 10;
+                score = (easy) - (time * 2) - (hints_taken) * 10;
                 next_difficulty = medium_weight;
-                difficulty = next_difficulty;
+            currentDifficulty = next_difficulty;
             }
-            else if (difficulty == medium_weight && time > 750)
+            else if (difficulty == medium_weight && time > 200)
             {
                 next_difficulty = easy_weight;
-                difficulty = next_difficulty;
+            currentDifficulty = next_difficulty;
             }
-            else if (difficulty == medium_weight && time <= 750)
+            else if (difficulty == medium_weight && time <= 200)
             {
-                score = (medium) - (time * 1.5) - (hints_taken) * 10;
+                score = (medium) - (time * 2) - (hints_taken) * 10;
                 next_difficulty = hard_weight;
-                difficulty = next_difficulty;
+            currentDifficulty = next_difficulty;
             }
-            else if (difficulty == hard_weight && time > 1000)
+            else if (difficulty == hard_weight && time > 500)
             {
                 next_difficulty = medium_weight;
-                difficulty = next_difficulty;
+            currentDifficulty = next_difficulty;
             }
-            else if (difficulty == hard_weight && time <= 1000)
+            else if (difficulty == hard_weight && time <= 500)
             {
-                score = (hard) - (time * 1.5) - (hints_taken) * 10;
+                score = (hard) - (time * 2) - (hints_taken) * 10;
                 next_difficulty = next_level;
-                difficulty = next_difficulty;
+            currentDifficulty = next_difficulty;
             }
-        }
+
         
         /*Console.WriteLine(next_difficulty);
         Console.WriteLine(score);*/

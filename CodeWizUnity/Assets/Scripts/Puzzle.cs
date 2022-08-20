@@ -18,12 +18,12 @@ public class Puzzle : MonoBehaviour
     [SerializeField] Camera cam;
     [SerializeField] Transform loopSelectionObject;
     [SerializeField] GameObject failureCanvas;
-
+    private float answer;
 
     //1 unit rotation = 30 degree clockwise
     //rotation speed, degrees per second
     private float rotationSpeed = 30.0f;
-    private float animSpeed = 0.01f;
+    private float animSpeed = 0.05f;
 
     //random generation
     private float correctRotation;
@@ -51,32 +51,34 @@ public class Puzzle : MonoBehaviour
         failureCanvas.SetActive(false);
         DynamicDifficulty.startTimer();
         n = DynamicDifficulty.currentDifficulty + 1;
-        //n=1;
-        Debug.Log(n);
+        //n=3;
+        //Debug.Log(n);
         correctRotation = Random.Range(1, 3);
-        //correctRotation = 2;
+        correctRotation = 2;
         Debug.Log(correctRotation);
         for (int i = 0; i <n; i++)
         {
             Debug.Log(i);
             rings[2-i].SetActive(true);
             correctRings[2 - i].SetActive(true);
-            rings[2-i].transform.Rotate(Vector3.back, rotationSpeed * Mathf.Pow(correctRotation, i+1));
+            rings[2-i].transform.Rotate(Vector3.back, rotationSpeed * Mathf.Pow(correctRotation, n-i));
         }
+        answer = Mathf.Pow(correctRotation, n);
         //random generation of answer
         //rings[0].transform.parent.GetChild(3).GetChild(n - 1).gameObject.SetActive(true);
     }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T))
+        if(Input.GetKeyDown(KeyCode.T)&&!completed)
         {
+            completed = true;
             if (n == 1)
-                rotate1(3, true);
+                StartCoroutine(rotate1(3, true,3));
             else if(n == 2)
-                rotate2(3, true);
+                StartCoroutine(rotate2(3, true,3));
             else if(n == 3)
-                rotate3(3, true);
+                StartCoroutine(rotate3(3, true,3));
         }
         if (Input.GetMouseButtonDown(0))
         {
@@ -155,30 +157,31 @@ public class Puzzle : MonoBehaviour
         for (int i = 0; i < n; i++)
         {
             rings[2-i].transform.localRotation = startRotation;
-            rings[2-i].transform.Rotate(Vector3.back, rotationSpeed * Mathf.Pow(correctRotation, i +1));
+            rings[2-i].transform.Rotate(Vector3.back, rotationSpeed * Mathf.Pow(correctRotation, n-i));
         }
 
     }
-    public TMP_InputField answerInputField;
+    public TMP_InputField innerInputfield;
+    public TMP_InputField outerInputfield;
     private long timeElapsed;
     public void guessAnswer()
     {
-        if (answerInputField.text.Equals(""))
+        if (innerInputfield.text.Equals("")||outerInputfield.text.Equals(""))
             return;
         timeElapsed = DynamicDifficulty.getTimeElapsed();
-        numberPressed = int.Parse(answerInputField.text);
-        
+        numberPressed = int.Parse(outerInputfield.text);
         reset();
+        int answer= int.Parse(innerInputfield.text);
         completed = true;
         if (n == 3)
-            StartCoroutine(rotate3(numberPressed, false));
+            StartCoroutine(rotate3(numberPressed, false,answer));
         else if (n == 2)
-            StartCoroutine(rotate2(numberPressed, false));
+            StartCoroutine(rotate2(numberPressed, false, answer));
         else if (n == 1)
-            StartCoroutine(rotate1(numberPressed, false));
+            StartCoroutine(rotate1(numberPressed, false, answer));
 
     }
-    IEnumerator rotate3(int x, bool test)
+    IEnumerator rotate3(int x, bool test,int answer)
     {
         for (int i = 0; i < x; i++)
         {
@@ -200,11 +203,11 @@ public class Puzzle : MonoBehaviour
         }
         completed = false;
         if (!test)
-            complete(x);
+            complete(answer);
         else
             reset();
     }
-    IEnumerator rotate2(int x, bool test)
+    IEnumerator rotate2(int x, bool test,int answer)
     {
         //animSpeed = 1f;
         for (int i = 0; i < x; i++)
@@ -221,11 +224,11 @@ public class Puzzle : MonoBehaviour
         }
         completed = false;
         if (!test)
-            complete(x);
+            complete(answer);
         else
             reset();
     }
-    IEnumerator rotate1(int x, bool test)
+    IEnumerator rotate1(int x, bool test,int answer)
     {
         for (int i = 0; i < x; i++)
         {
@@ -237,19 +240,20 @@ public class Puzzle : MonoBehaviour
 
         completed = false;
         if (!test)
-            complete(x);
+            complete(answer);
         else
             reset();
     }
     void complete(int x)
     {
-        if (x == correctRotation)
+        if (x == answer)
         {
-            DynamicDifficulty.NextDifficulty(timeElapsed, n, 0);
+            DynamicDifficulty.NextDifficulty((int)timeElapsed, n-1, 0);
             Debug.Log(timeElapsed);
-            APIConnections.makeLevelChanges(levelNumber, n-1, timeElapsed, levelNumber, 0);
+            APIConnections.makeLevelChanges(DynamicDifficulty.score, n-1, timeElapsed, levelNumber, 0);
             StartCoroutine(APIConnections.UpdateLevel(levelNumber));
             StartCoroutine(APIConnections.FetchLevel(levelNumber));
+            Debug.Log(DynamicDifficulty.currentDifficulty);
             if (DynamicDifficulty.currentDifficulty < 3)
                 startGame();
             else

@@ -40,6 +40,8 @@ public class LeverPuzzle : MonoBehaviour
     private void Start()
     {
         levelComplete = false;
+        /*Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;*/
         SAnim1 = Switch1.transform.GetChild(1).gameObject.GetComponent<Animator>();
         SAnim2 = Switch2.transform.GetChild(1).gameObject.GetComponent<Animator>();
         SAnim3 = Switch3.transform.GetChild(1).gameObject.GetComponent<Animator>();

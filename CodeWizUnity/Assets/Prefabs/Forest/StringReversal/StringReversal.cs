@@ -75,7 +75,7 @@ public class StringReversal : MonoBehaviour
     }
     string RandomString(int length)
     {
-        string alphabet = "abdfhijklmnopqrstuvwxyz";
+        string alphabet = "abdfhijklmnoprstuvwxyz";
         System.Random num = new System.Random();
         string randomString = new string(
             alphabet
@@ -85,6 +85,15 @@ public class StringReversal : MonoBehaviour
                 .ToArray()
             );
         return randomString;
+    }
+    [SerializeField] GameObject dialogue;
+    
+    public void explore()
+    {
+        dialogue.SetActive (false);
+        mainPlayer.SetActive (true);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
     public void check()
     {
@@ -103,7 +112,7 @@ public class StringReversal : MonoBehaviour
             long time = DynamicDifficulty.getTimeElapsed();
             APIConnections.makeLevelChanges(DynamicDifficulty.score,difficulty,time,levelNumber,0); 
             StartCoroutine(APIConnections.UpdateLevel(levelNumber));
-            DynamicDifficulty.NextDifficulty((double)DynamicDifficulty.getTimeElapsed(), difficulty, 0);
+            DynamicDifficulty.NextDifficulty((int)DynamicDifficulty.getTimeElapsed(), difficulty, 0);
             difficulty = DynamicDifficulty.currentDifficulty;
             //APIConnections.FetchLevel(levelNumber);
             //update score
